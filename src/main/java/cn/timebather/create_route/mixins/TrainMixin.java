@@ -24,7 +24,7 @@ import java.util.UUID;
 public class TrainMixin{
     @Unique
     @Nullable
-    public TractionEngine createRouteRewrite$tractionEngine;
+    public TractionEngine createRoute$tractionEngine;
 
     @Shadow
     public TrackGraph graph;
@@ -36,13 +36,13 @@ public class TrainMixin{
         if (this.graph == null) {
             return;
         }
-        if(this.createRouteRewrite$tractionEngine!=null)
-            this.createRouteRewrite$tractionEngine.tick();
+        if(this.createRoute$tractionEngine!=null)
+            this.createRoute$tractionEngine.tick();
     }
 
     @Inject(method = "tickPassiveSlowdown",at=@At("HEAD"),cancellable = true)
     private void onTickPassiveSlowdown(CallbackInfo ci){
-        if(this.createRouteRewrite$tractionEngine!=null){
+        if(this.createRoute$tractionEngine!=null){
             ci.cancel();
         }
     }
@@ -53,14 +53,14 @@ public class TrainMixin{
             TractionEngine engine = new TractionEngine(cir.getReturnValue());
             engine.read(tag.getCompound("createRouteRewrite$tractionEngine"));
             ((TrainMixin) (Object) cir.getReturnValue())
-                    .createRouteRewrite$tractionEngine = engine;
+                    .createRoute$tractionEngine = engine;
         }
     }
 
     @Inject(method = "write",at=@At("TAIL"))
     private void onWrite(DimensionPalette dimensions, CallbackInfoReturnable<CompoundTag> cir){
         CompoundTag tag = cir.getReturnValue();
-        if(this.createRouteRewrite$tractionEngine != null)
-            tag.put("createRouteRewrite$tractionEngine",this.createRouteRewrite$tractionEngine.write());
+        if(this.createRoute$tractionEngine != null)
+            tag.put("createRouteRewrite$tractionEngine",this.createRoute$tractionEngine.write());
     }
 }

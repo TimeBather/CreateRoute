@@ -23,35 +23,35 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = CarriageContraption.class,remap = false)
 public class CarriageContraptionMixin implements DeviceCarriageContraption, CarriageContraptionMixinInterface {
     @Unique
-    ContraptionDeviceManager createRouteRewrite$deviceManager = new ContraptionDeviceManager((CarriageContraption)(Object)this);
+    ContraptionDeviceManager createRoute$deviceManager = new ContraptionDeviceManager((CarriageContraption)(Object)this);
 
     @Inject(method = "capture", at = @At("TAIL"))
     void onCapture(Level world, BlockPos pos, CallbackInfoReturnable<Pair<StructureTemplate.StructureBlockInfo, BlockEntity>> cir){
         BlockState blockState = world.getBlockState(pos);
         BlockEntity be = world.getBlockEntity(pos);
-        createRouteRewrite$deviceManager.onCapture(blockState,be,pos,(CarriageContraption)(Object)this);
+        createRoute$deviceManager.onCapture(blockState,be,pos,(CarriageContraption)(Object)this);
     }
 
     @Override
     public ContraptionDeviceManager createRouteRewrite$getDeviceManager() {
-        return createRouteRewrite$deviceManager;
+        return createRoute$deviceManager;
     }
 
     @Inject(method = "assemble", at=@At("TAIL"))
     void onAssemble(Level world, BlockPos pos, CallbackInfoReturnable<Boolean> cir){
-        this.createRouteRewrite$deviceManager.onAssemble();
+        this.createRoute$deviceManager.onAssemble();
     }
 
     @Inject(method = "writeNBT", at=@At("TAIL"))
     void onWriteNBT(boolean spawnPacket, CallbackInfoReturnable<CompoundTag> cir ){
         CompoundTag nbt = cir.getReturnValue();
-        nbt.put("createRoute$devices",createRouteRewrite$deviceManager.write());
+        nbt.put("createRoute$devices",createRoute$deviceManager.write());
     }
 
     @Inject(method = "readNBT", at=@At("TAIL"))
     void onReadNBT(Level world, CompoundTag nbt, boolean spawnData, CallbackInfo ci){
         if(nbt.contains("createRoute$devices"))
-            createRouteRewrite$deviceManager.read(nbt.getCompound("createRoute$devices"));
+            createRoute$deviceManager.read(nbt.getCompound("createRoute$devices"));
     }
 
     @Shadow

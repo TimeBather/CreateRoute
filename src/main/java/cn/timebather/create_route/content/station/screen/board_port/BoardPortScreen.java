@@ -1,10 +1,14 @@
 package cn.timebather.create_route.content.station.screen.board_port;
 
 import cn.timebather.create_route.AllBlockEntities;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -20,6 +24,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.Capability;
@@ -49,5 +54,24 @@ public class BoardPortScreen extends HorizontalDirectionalBlock implements Entit
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext placeContext) {
+        return super.getStateForPlacement(placeContext)
+                .setValue(FACING,placeContext.getHorizontalDirection());
+    }
+
+    @Override
+    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player p_60506_, InteractionHand p_60507_, BlockHitResult p_60508_) {
+        if(!level.isClientSide)
+            return InteractionResult.SUCCESS;
+
+        BlockEntity be = level.getBlockEntity(blockPos);
+
+        if(be instanceof BoardPortScreenBlockEntity boardPortScreenBlockEntity)
+            Minecraft.getInstance().setScreen(new BoardPortScreenEditScreen(boardPortScreenBlockEntity));
+        return InteractionResult.SUCCESS;
     }
 }

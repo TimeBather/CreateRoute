@@ -38,6 +38,7 @@ public class CreateRoute
         AllMenuTypes.init();
         AllTrainDevices.init(modEventBus);
         AllMovingBehaviours.init(modEventBus);
+        AllPackets.registerPackets();
         AllItems.init();
         AllCreateMovingBehaviours.init();
         HTTP_SERVER.up();

@@ -37,8 +37,8 @@ public class BoardPortScreenRenderer extends GeoBlockRenderer<BoardPortScreenBlo
         poseStack.scale(0.08f,0.08f,0.08f);
         Matrix4f pose = poseStack.last().pose();
         int lightLevel = getLightLevel(boardPortScreenBlockEntity.getLevel(),boardPortScreenBlockEntity.getBlockPos().north());
-        renderTitleText(pose,10.5f,"11",bufferSource,lightLevel);
-        renderTitleText(pose,91,"12",bufferSource,lightLevel);
+        renderTitleText(pose,10.5f, boardPortScreenBlockEntity.leftPortId, bufferSource,lightLevel);
+        renderTitleText(pose,91,boardPortScreenBlockEntity.rightPortId, bufferSource,lightLevel);
         poseStack.popPose();
 
         poseStack.pushPose();

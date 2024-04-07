@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "cn.timebather.create_route.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "create_railway.refmap.json",
+  "mixins": [
+    "CarriageContraptionMixin",
+    "TrainMixin",
+    "accessor.CarriageBogeyAccessor"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

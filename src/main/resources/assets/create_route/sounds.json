@@ -1,0 +1,62 @@
+{
+  "create_route.lkj.green_signal": {
+    "subtitle": "create_route.lkj.green_signal",
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "create_route:lkj/green_signal",
+        "steam": true
+      }
+    ]
+  },
+  "create_route.lkj.red_yellow_signal": {
+    "subtitle": "create_route.lkj.red_yellow_signal",
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "create_route:lkj/red_yellow_signal",
+        "steam": true
+      }
+    ]
+  },
+  "create_route.lkj.white_signal": {
+    "subtitle": "create_route.lkj.white_signal",
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "create_route:lkj/white_signal",
+        "steam": true
+      }
+    ]
+  },
+  "create_route.lkj.red_signal": {
+    "subtitle": "create_route.lkj.red_signal",
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "create_route:lkj/red_signal",
+        "steam": true
+      }
+    ]
+  },
+  "create_route.lkj.yellow_signal": {
+    "subtitle": "create_route.lkj.yellow_signal",
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "create_route:lkj/yellow_signal",
+        "steam": true
+      }
+    ]
+  },
+  "create_route.lkj.green_yellow_signal": {
+    "subtitle": "create_route.lkj.green_yellow_signal",
+    "replace": "true",
+    "sounds": [
+      {
+        "name": "create_route:lkj/green_yellow_signal",
+        "steam": true
+      }
+    ]
+  }
+}

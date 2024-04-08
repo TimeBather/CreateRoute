@@ -53,6 +53,5 @@ public class CarriageDeviceManager  {
         TrainDevice device = deviceType.create();
         device.read(deviceConfig);
         this.devices.put(deviceId,device);
-
     }
 }

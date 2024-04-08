@@ -2,7 +2,9 @@ package cn.timebather.create_route;
 
 
 import cn.timebather.create_route.content.station.screen.board_port.BoardPortScreenEditPacket;
+import cn.timebather.create_route.content.train.packets.ClientBoundDevicePeerPacket;
 import cn.timebather.create_route.content.train.packets.DeviceInteractionResultPacket;
+import cn.timebather.create_route.content.train.packets.ServerBoundDevicePeerPacket;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,7 +22,9 @@ import java.util.function.Supplier;
 
 public enum AllPackets {
     BOARD_PORT_EDIT(BoardPortScreenEditPacket.class, BoardPortScreenEditPacket::new, NetworkDirection.PLAY_TO_SERVER),
-    DEVICE_INTERACTION_PACKET(DeviceInteractionResultPacket.class, DeviceInteractionResultPacket::new, NetworkDirection.PLAY_TO_CLIENT);
+    DEVICE_INTERACTION_PACKET(DeviceInteractionResultPacket.class, DeviceInteractionResultPacket::new, NetworkDirection.PLAY_TO_CLIENT),
+    TRAIN_DEVICE_PEER_PACKET_CLIENT_BOUND(ClientBoundDevicePeerPacket.class, ClientBoundDevicePeerPacket::new,NetworkDirection.PLAY_TO_SERVER),
+    TRAIN_DEVICE_PEER_PACKET_SERVER_BOUND(ServerBoundDevicePeerPacket.class, ServerBoundDevicePeerPacket::new,NetworkDirection.PLAY_TO_CLIENT);
     public static final ResourceLocation CHANNEL_NAME = CreateRoute.asResource("packets");
     public static final int NETWORK_VERSION = 1;
     public static final String NETWORK_VERSION_STR = String.valueOf(NETWORK_VERSION);

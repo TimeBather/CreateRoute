@@ -62,8 +62,8 @@ public class TrainControllerDevice extends TrainDevice {
     }
 
 
-    Lazy<TrainControllerServer> server = Lazy.of(TrainControllerServer::new);
-    Lazy<TrainControllerClient> client = Lazy.of(TrainControllerClient::new);
+    Lazy<TrainControllerServer> server = Lazy.of(()-> new TrainControllerServer(this));
+    Lazy<TrainControllerClient> client = Lazy.of(()-> new TrainControllerClient(this));
 
     @Override
     public TrainControllerServer getServer() {

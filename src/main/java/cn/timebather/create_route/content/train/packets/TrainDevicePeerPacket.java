@@ -8,9 +8,11 @@ import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public abstract class TrainDevicePeerPacket extends SimplePacketBase implements SimpleDevicePacketSender {
@@ -64,4 +66,42 @@ public abstract class TrainDevicePeerPacket extends SimplePacketBase implements 
     abstract void receive(TrainDevice device, CompoundTag packet, Player player);
 
     public abstract void send(CompoundTag packet);
+
+    public abstract PeerIdentifier getIdentifier(ResourceLocation location);
+
+    public static class PeerIdentifier{
+        UUID target;
+        UUID trainId;
+        int contraptionId;
+        UUID deviceId;
+        String channelName;
+        PeerIdentifier(UUID target,UUID trainId,int contraptionId,UUID deviceId,String channelName){
+            this.target = target;
+            this.trainId = trainId;
+            this.contraptionId = contraptionId;
+            this.deviceId = deviceId;
+            this.channelName = channelName;
+        }
+
+        public static PeerIdentifier of(UUID target,UUID trainId,int contraptionId,UUID deviceId,String channelName){
+            return new PeerIdentifier(target,trainId, contraptionId, deviceId, channelName);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PeerIdentifier that = (PeerIdentifier) o;
+            return Objects.equals(target,that.target) &&
+                    contraptionId == that.contraptionId &&
+                    Objects.equals(trainId, that.trainId) &&
+                    Objects.equals(deviceId, that.deviceId) &&
+                    Objects.equals(channelName,that.channelName);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(target, trainId, contraptionId, deviceId, channelName);
+        }
+    }
 }

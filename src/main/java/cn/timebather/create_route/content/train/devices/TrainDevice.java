@@ -19,7 +19,7 @@ public abstract class TrainDevice{
     @Unique
     final RandomSource randomSource = RandomSource.create();
 
-    UUID id = UUID.fromString("00000000-0000-0000-0000-000000000000");
+    public UUID id = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
     public void onCapture(BlockState blockState, BlockPos pos, CarriageContraption carriageContraption, BlockEntity blockEntity){
         this.id = Mth.createInsecureUUID(randomSource);

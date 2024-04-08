@@ -14,10 +14,8 @@ public class TrainControllerServer implements DevicePeer {
 
     @Override
     public void receive(CompoundTag tag, SimpleDevicePacketSender sender) {
-        if(!tag.contains("Method"))
-            return;
-        switch (tag.getString("Method")){
-
-        }
+        CompoundTag response = new CompoundTag();
+        response.putString("Text","HelloWorld");
+        sender.send(response);
     }
 }

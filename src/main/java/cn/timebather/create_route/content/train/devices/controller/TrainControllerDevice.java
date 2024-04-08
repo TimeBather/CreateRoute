@@ -1,11 +1,13 @@
 package cn.timebather.create_route.content.train.devices.controller;
 
+import cn.timebather.create_route.AllPackets;
 import cn.timebather.create_route.content.train.AllTrainDevices;
 import cn.timebather.create_route.content.train.devices.*;
 import cn.timebather.create_route.content.train.devices.controller.api.TrainControllerClient;
 import cn.timebather.create_route.content.train.devices.controller.api.TrainControllerServer;
 import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlock;
 import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlockEntity;
+import cn.timebather.create_route.content.train.packets.ServerBoundDevicePeerPacket;
 import cn.timebather.create_route.interfaces.CarriageContraptionMixinInterface;
 import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -21,10 +23,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Lazy;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class TrainControllerDevice extends TrainDevice {
 
-    HashMap<TrainDeviceType<? extends TrainDevice>,TrainDevice> devices = new HashMap<>();
+    HashMap<UUID,TrainDevice> devices = new HashMap<>();
 
     public TrainControllerDevice() {}
 
@@ -41,7 +44,7 @@ public class TrainControllerDevice extends TrainDevice {
                 TrainDeviceType<? extends TrainDevice> trainDeviceType = trainDeviceProvider.getDevice();
                 TrainDevice device = trainDeviceType.create();
                 device.onCapture(blockState,pos,carriageContraption,blockEntity);
-                devices.put(trainDeviceType,device);
+                devices.put(device.id,device);
             }
         });
         Direction facing = blockState.getValue(TrainControllerBlock.FACING);
@@ -83,6 +86,7 @@ public class TrainControllerDevice extends TrainDevice {
     @Override
     public void read(CompoundTag tag) {
         super.read(tag);
+        devices.putAll(DeviceMapSerializer.deserialize(tag));
     }
 
     @Override
@@ -98,5 +102,6 @@ public class TrainControllerDevice extends TrainDevice {
     @Override
     public void interaction(Player player, Carriage carriage) {
         player.displayClientMessage(Component.literal("Hello!"),false);
+        AllPackets.getChannel().sendToServer(ServerBoundDevicePeerPacket.create(carriage,id,new CompoundTag()));
     }
 }

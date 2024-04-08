@@ -1,5 +1,6 @@
 package cn.timebather.create_route.content.train.devices.controller;
 
+import cn.timebather.create_route.content.train.AllTrainDevices;
 import cn.timebather.create_route.content.train.devices.*;
 import cn.timebather.create_route.content.train.devices.controller.api.TrainControllerClient;
 import cn.timebather.create_route.content.train.devices.controller.api.TrainControllerServer;
@@ -7,6 +8,7 @@ import cn.timebather.create_route.content.train.devices.controller.blocks.TrainC
 import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlockEntity;
 import cn.timebather.create_route.interfaces.CarriageContraptionMixinInterface;
 import com.simibubi.create.content.contraptions.Contraption;
+import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +19,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.HashMap;
 
@@ -25,12 +26,11 @@ public class TrainControllerDevice extends TrainDevice {
 
     HashMap<TrainDeviceType<? extends TrainDevice>,TrainDevice> devices = new HashMap<>();
 
-    public TrainControllerDevice(CarriageContraption contraption) {
-        super(contraption);
-    }
+    public TrainControllerDevice() {}
 
     @Override
     public void onCapture(BlockState blockState, BlockPos pos, CarriageContraption carriageContraption, BlockEntity blockEntity) {
+        super.onCapture(blockState,pos,carriageContraption,blockEntity);
         if(!(blockEntity instanceof TrainControllerBlockEntity trainControllerBlock)){
             return;
         }
@@ -39,38 +39,28 @@ public class TrainControllerDevice extends TrainDevice {
                 if(!(item instanceof TrainDeviceProvider trainDeviceProvider))
                     continue;
                 TrainDeviceType<? extends TrainDevice> trainDeviceType = trainDeviceProvider.getDevice();
-                TrainDevice device = trainDeviceType.create(carriageContraption);
+                TrainDevice device = trainDeviceType.create();
                 device.onCapture(blockState,pos,carriageContraption,blockEntity);
                 devices.put(trainDeviceType,device);
             }
         });
         Direction facing = blockState.getValue(TrainControllerBlock.FACING);
 
-        CarriageContraptionMixinInterface contraptionMixinInterface = (CarriageContraptionMixinInterface) this.contraption;
+        CarriageContraptionMixinInterface contraptionMixinInterface = (CarriageContraptionMixinInterface) carriageContraption;
 
-        Direction assemblyDirection = this.contraption.getAssemblyDirection();
+        Direction assemblyDirection = carriageContraption.getAssemblyDirection();
         if (facing.getAxis() != assemblyDirection.getAxis()) {
-            ((CarriageContraptionMixinInterface)this.contraption).createRouteRewrite$setSidewaysControl(true);
+            contraptionMixinInterface.createRoute$setSidewaysControl(true);
         } else {
             boolean forwards = facing == assemblyDirection;
             if (forwards) {
-                ((CarriageContraptionMixinInterface)this.contraption).createRouteRewrite$setForwardControl(true);
+                contraptionMixinInterface.createRoute$setForwardControl(true);
             } else {
-                ((CarriageContraptionMixinInterface)this.contraption).createRouteRewrite$setBackwardControl(true);
+                contraptionMixinInterface.createRoute$setBackwardControl(true);
             }
         }
     }
 
-    @Override
-    public void assembleCheck(ContraptionDeviceManager contraptionDeviceManager) {
-
-    }
-
-    @Override
-    public BlockState interaction(Player player, ContraptionDeviceManager deviceManager, Contraption contraption, BlockPos blockPos, BlockState blockState) {
-        player.sendSystemMessage(Component.literal("HelloWorld"));
-        return blockState;
-    }
 
     Lazy<TrainControllerServer> server = Lazy.of(TrainControllerServer::new);
     Lazy<TrainControllerClient> client = Lazy.of(TrainControllerClient::new);
@@ -86,22 +76,27 @@ public class TrainControllerDevice extends TrainDevice {
     }
 
     @Override
-    public void read(CompoundTag tag) {
+    public TrainDeviceType<? extends TrainDevice> getType() {
+        return AllTrainDevices.TRAIN_CONTROLLER.get();
+    }
 
+    @Override
+    public void read(CompoundTag tag) {
+        super.read(tag);
     }
 
     @Override
     public CompoundTag write() {
-        return null;
+        return super.write();
     }
 
     @Override
-    public void init(ContraptionDeviceManager contraptionDeviceManager) {
-
+    public void init(CarriageDeviceManager carriageDeviceManager) {
+        super.init(carriageDeviceManager);
     }
 
     @Override
-    public void dispose(ContraptionDeviceManager contraptionDeviceManager) {
-
+    public void interaction(Player player, Carriage carriage) {
+        player.displayClientMessage(Component.literal("Hello!"),false);
     }
 }

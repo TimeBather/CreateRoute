@@ -5,6 +5,7 @@ import cn.timebather.create_route.content.train.AllMovingBehaviours;
 import cn.timebather.create_route.content.train.AllTrainDevices;
 import cn.timebather.create_route.infrastructure.http.HttpServer;
 import cn.timebather.create_route.infrastructure.http.JsonWsHttpHandler;
+import com.mojang.logging.LogUtils;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.slf4j.Logger;
 
 @Mod(CreateRoute.MODID)
 public class CreateRoute
@@ -27,6 +29,8 @@ public class CreateRoute
     public static final RouteManager ROUTE_MANAGER = new RouteManager();
 
     public static final HttpServer HTTP_SERVER = new HttpServer(()-> JsonWsHttpHandler.of(new RouteModHttpTransformer()));
+
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public CreateRoute()
     {

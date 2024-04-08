@@ -5,11 +5,13 @@ import com.simibubi.create.content.trains.entity.CarriageContraption;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class ContraptionDeviceManager {
 
@@ -19,18 +21,16 @@ public class ContraptionDeviceManager {
         this.contraption = contraption;
     }
 
-    protected HashMap<TrainDeviceType<?>,TrainDevice> devices = new HashMap<>();
+    protected HashMap<UUID, TrainDevice> devices = new HashMap<>();
+    protected HashMap<BlockPos, UUID> locators = new HashMap<>();
 
     public void onCapture(BlockState blockState, BlockEntity blockEntity, BlockPos pos, CarriageContraption carriageContraption){
         if(blockState.getBlock() instanceof TrainDeviceProvider trainDeviceBlock){
             TrainDeviceType<?> trainDeviceType = trainDeviceBlock.getDevice();
-            if(this.devices.containsKey(trainDeviceType)){
-                // @todo: multi-device is not supported yet
-                return;
-            }
-            TrainDevice trainDevice = trainDeviceType.create(contraption);
+            TrainDevice trainDevice = trainDeviceType.create();
             trainDevice.onCapture(blockState,pos,carriageContraption,blockEntity);
-            this.devices.put(trainDeviceType,trainDevice);
+            this.devices.put(trainDevice.id,trainDevice);
+            this.locators.put(pos.subtract(contraption.anchor),trainDevice.id);
         }
     }
 
@@ -41,48 +41,31 @@ public class ContraptionDeviceManager {
     }
 
     public void reset(){
-        this.devices.forEach((deviceType,instance)->instance.dispose(this));
         this.devices.clear();
     }
 
-    public void read(CompoundTag tag){
-        if(!tag.contains("Devices"))
-            return;
-        this.reset();
-        ListTag list = tag.getList("Devices",CompoundTag.TAG_COMPOUND);
-        for (int i = 0; i < list.size(); i++) {
-            CompoundTag device = list.getCompound(i);
-            ResourceLocation location = ResourceLocation.tryParse(device.getString("Name"));
-            if(location == null)
-                continue;
-            TrainDeviceType<?> trainDeviceType = AllTrainDevices.REGISTRY.get().getValue(location);
-            if(trainDeviceType == null)
-                continue;
-            TrainDevice trainDevice = trainDeviceType.create(contraption);
-            if(device.contains("Config")){
-                trainDevice.read(device.getCompound("Config"));
-            }
-            this.devices.put(trainDeviceType,trainDevice);
-        }
+    public CompoundTag write() {
+        CompoundTag tag = new CompoundTag();
+        ListTag locatorsTag = new ListTag();
+        this.locators.forEach((pos,id)->{
+            CompoundTag locator = new CompoundTag();
+            locator.putLong("Locator",pos.asLong());
+            locator.putUUID("Uuid",id);
+            locatorsTag.add(locator);
+        });
+        tag.put("Locators",locatorsTag);
+        return tag;
     }
 
-    public CompoundTag write(){
-        ListTag devicesTag = new ListTag();
-        this.devices.forEach((device,instance)->{
-            ResourceLocation location = AllTrainDevices.REGISTRY.get().getKey(device);
-            if(location == null)
-                return;
-            CompoundTag tag = instance.write();
-            CompoundTag deviceTag = new CompoundTag();
-            if(tag != null)
-                deviceTag.put("Config",tag);
-            deviceTag.putString("Name",location.toString());
-            devicesTag.add(deviceTag);
-        });
-
-        CompoundTag deviceManagerData = new CompoundTag();
-        deviceManagerData.put("Devices",devicesTag);
-
-        return deviceManagerData;
+    public void read(CompoundTag tag) {
+        if(!tag.contains("Locators"))
+            return;
+        ListTag locatorsTag = tag.getList("Locators",Tag.TAG_COMPOUND);
+        for (int i = 0; i < locatorsTag.size(); i++) {
+            CompoundTag locator = locatorsTag.getCompound(i);
+            if(!locator.contains("Locator") || !locator.contains("Uuid"))
+                continue;
+            this.locators.put(BlockPos.of(locator.getLong("Locator")),locator.getUUID("Uuid"));
+        }
     }
 }

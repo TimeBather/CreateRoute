@@ -10,8 +10,8 @@ public class TrainDeviceType<T extends TrainDevice>{
         this.factory = factory;
     }
 
-    public T create(CarriageContraption contraption){
-        return this.factory.create(contraption);
+    public T create(){
+        return this.factory.create();
     }
 
     public static final class Builder<T extends TrainDevice>{
@@ -29,9 +29,8 @@ public class TrainDeviceType<T extends TrainDevice>{
         }
     }
 
-
     @FunctionalInterface
     public interface TrainDeviceSuppler<T extends TrainDevice> {
-        T create(CarriageContraption contraption);
+        T create();
     }
 }

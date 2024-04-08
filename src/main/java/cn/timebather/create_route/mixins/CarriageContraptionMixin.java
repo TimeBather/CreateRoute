@@ -42,18 +42,6 @@ public class CarriageContraptionMixin implements DeviceCarriageContraption, Carr
         this.createRoute$deviceManager.onAssemble();
     }
 
-    @Inject(method = "writeNBT", at=@At("TAIL"))
-    void onWriteNBT(boolean spawnPacket, CallbackInfoReturnable<CompoundTag> cir ){
-        CompoundTag nbt = cir.getReturnValue();
-        nbt.put("createRoute$devices",createRoute$deviceManager.write());
-    }
-
-    @Inject(method = "readNBT", at=@At("TAIL"))
-    void onReadNBT(Level world, CompoundTag nbt, boolean spawnData, CallbackInfo ci){
-        if(nbt.contains("createRoute$devices"))
-            createRoute$deviceManager.read(nbt.getCompound("createRoute$devices"));
-    }
-
     @Shadow
     private boolean forwardControls;
 
@@ -62,19 +50,35 @@ public class CarriageContraptionMixin implements DeviceCarriageContraption, Carr
 
     @Shadow private boolean sidewaysControls;
 
+    @Override
+    public ContraptionDeviceManager createRoute$getDeviceManager() {
+        return createRoute$deviceManager;
+    }
+
     @Unique
     @Override
-    public void createRouteRewrite$setForwardControl(boolean isForwardControls) {
+    public void createRoute$setForwardControl(boolean isForwardControls) {
         this.forwardControls = isForwardControls;
     }
 
     @Override
-    public void createRouteRewrite$setBackwardControl(boolean isBackwardControls) {
+    public void createRoute$setBackwardControl(boolean isBackwardControls) {
         this.backwardControls = isBackwardControls;
     }
 
     @Override
-    public void createRouteRewrite$setSidewaysControl(boolean isSidewaysControls) {
+    public void createRoute$setSidewaysControl(boolean isSidewaysControls) {
         this.sidewaysControls = isSidewaysControls;
+    }
+
+    @Inject(method = "writeNBT",at=@At("TAIL"))
+    void onWriteNBT(boolean spawnPacket, CallbackInfoReturnable<CompoundTag> cir){
+        CompoundTag tag = cir.getReturnValue();
+        tag.put("createRoute$devices",createRoute$deviceManager.write());
+    }
+    @Inject(method = "readNBT",at=@At("TAIL"))
+    void onReadNBT(Level world, CompoundTag nbt, boolean spawnData, CallbackInfo ci){
+        if(nbt.contains("createRoute$devices"))
+            createRoute$deviceManager.read(nbt.getCompound("createRoute$devices"));
     }
 }

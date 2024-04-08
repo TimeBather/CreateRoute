@@ -6,6 +6,7 @@
   "refmap": "create_railway.refmap.json",
   "mixins": [
     "CarriageContraptionMixin",
+    "CarriageMixin",
     "TrainMixin",
     "accessor.CarriageBogeyAccessor"
   ],

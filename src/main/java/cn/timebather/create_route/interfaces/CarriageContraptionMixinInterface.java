@@ -1,10 +1,12 @@
 package cn.timebather.create_route.interfaces;
 
-import net.minecraft.core.Direction;
+import cn.timebather.create_route.content.train.devices.ContraptionDeviceManager;
 
 public interface CarriageContraptionMixinInterface {
-    public void createRouteRewrite$setForwardControl(boolean isForwardControls);
 
-    public void createRouteRewrite$setBackwardControl(boolean isBackwardControls);
-    public void createRouteRewrite$setSidewaysControl(boolean isSidewaysControls);
+    public ContraptionDeviceManager createRoute$getDeviceManager();
+    public void createRoute$setForwardControl(boolean isForwardControls);
+
+    public void createRoute$setBackwardControl(boolean isBackwardControls);
+    public void createRoute$setSidewaysControl(boolean isSidewaysControls);
 }

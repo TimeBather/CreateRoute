@@ -1,8 +1,7 @@
 package cn.timebather.create_route.content.train.devices.atp.lkj2000;
 
-import cn.timebather.create_route.content.train.devices.ContraptionDeviceManager;
-import cn.timebather.create_route.content.train.devices.DevicePeer;
-import cn.timebather.create_route.content.train.devices.TrainDevice;
+import cn.timebather.create_route.content.train.AllTrainDevices;
+import cn.timebather.create_route.content.train.devices.*;
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.api.LKJ2000Client;
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.api.LKJ2000Server;
 import com.simibubi.create.content.contraptions.Contraption;
@@ -15,9 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Lazy;
 
 public class LKJ2000Device extends TrainDevice {
-    public LKJ2000Device(CarriageContraption contraption) {
-        super(contraption);
-    }
+    public LKJ2000Device() {}
 
     @Override
     public void onCapture(BlockState blockState, BlockPos pos, CarriageContraption carriageContraption, BlockEntity blockEntity) {
@@ -35,23 +32,13 @@ public class LKJ2000Device extends TrainDevice {
     }
 
     @Override
-    public void init(ContraptionDeviceManager contraptionDeviceManager) {
-
-    }
-
-    @Override
-    public void dispose(ContraptionDeviceManager contraptionDeviceManager) {
+    public void init(CarriageDeviceManager carriageDeviceManager) {
 
     }
 
     @Override
     public void assembleCheck(ContraptionDeviceManager contraptionDeviceManager) {
 
-    }
-
-    @Override
-    public BlockState interaction(Player player, ContraptionDeviceManager deviceManager, Contraption contraption, BlockPos blockPos, BlockState blockState) {
-        return null;
     }
 
     Lazy<DevicePeer> server = Lazy.of(LKJ2000Server::new);
@@ -65,5 +52,10 @@ public class LKJ2000Device extends TrainDevice {
     @Override
     public DevicePeer getClient() {
         return client.get();
+    }
+
+    @Override
+    public TrainDeviceType<? extends TrainDevice> getType() {
+        return AllTrainDevices.TRAIN_CONTROLLER.get();
     }
 }

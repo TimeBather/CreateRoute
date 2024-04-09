@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CarriageDeviceManager  {

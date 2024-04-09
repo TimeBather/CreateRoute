@@ -24,7 +24,7 @@ public class AllTrainDevices {
             DEVICES.register("train_controller", ()-> TrainDeviceType.Builder.of(TrainControllerDevice::new).build());
 
     public static final RegistryObject<TrainDeviceType<LKJ2000Device>> LKJ_2000 =
-            DEVICES.register("lkj2000", ()-> TrainDeviceType.Builder.of(LKJ2000Device::new).build());
+            DEVICES.register("atp_lkj2000", ()-> TrainDeviceType.Builder.of(LKJ2000Device::new).build());
 
     public static void init(IEventBus eventBus){
         DEVICES.register(eventBus);

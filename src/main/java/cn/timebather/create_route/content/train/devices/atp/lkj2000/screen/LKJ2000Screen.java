@@ -1,5 +1,6 @@
 package cn.timebather.create_route.content.train.devices.atp.lkj2000.screen;
 
+import cn.timebather.create_route.content.train.devices.atp.lkj2000.LKJ2000Device;
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.api.LKJ2000Client;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,7 +13,7 @@ public class LKJ2000Screen extends Screen {
 
     private final LKJ2000Client client;
 
-    LKJ2000Screen(LKJ2000Client client) {
+    public LKJ2000Screen(LKJ2000Client client, LKJ2000Device device) {
         super(Component.literal(""));
         this.client = client;
     }

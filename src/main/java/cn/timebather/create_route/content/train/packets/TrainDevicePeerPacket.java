@@ -1,5 +1,6 @@
 package cn.timebather.create_route.content.train.packets;
 
+import cn.timebather.create_route.PlayerResourceManager;
 import cn.timebather.create_route.content.train.devices.CarriageDeviceManager;
 import cn.timebather.create_route.content.train.devices.SimpleDeviceGetter;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
@@ -11,6 +12,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -68,6 +70,10 @@ public abstract class TrainDevicePeerPacket extends SimplePacketBase implements 
     public abstract void send(CompoundTag packet);
 
     public abstract PeerIdentifier getIdentifier(ResourceLocation location);
+
+    public PlayerResourceManager.CloseHandler onClose(PlayerResourceManager.CloseHandler closeHandler){
+        throw new NotImplementedException();
+    }
 
     public static class PeerIdentifier{
         UUID target;

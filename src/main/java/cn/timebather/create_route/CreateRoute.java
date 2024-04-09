@@ -28,6 +28,8 @@ public class CreateRoute
 
     public static final RouteManager ROUTE_MANAGER = new RouteManager();
 
+    public static final PlayerResourceManager PLAYER_RESOURCE_MANAGER = new PlayerResourceManager();
+
     public static final HttpServer HTTP_SERVER = new HttpServer(()-> JsonWsHttpHandler.of(new RouteModHttpTransformer()));
 
     public static final Logger LOGGER = LogUtils.getLogger();

@@ -1,11 +1,10 @@
 package cn.timebather.create_route.content.train.packets;
 
 import cn.timebather.create_route.AllPackets;
-import cn.timebather.create_route.Constants;
+import cn.timebather.create_route.CreateRoute;
+import cn.timebather.create_route.PlayerResourceManager;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import com.simibubi.create.content.trains.entity.Carriage;
-import com.simibubi.create.content.trains.entity.CarriageContraption;
-import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -41,6 +40,17 @@ public class ServerBoundDevicePeerPacket extends TrainDevicePeerPacket{
     @Override
     public void send(CompoundTag packet) {
         AllPackets.getChannel().send(PacketDistributor.PLAYER.with(()->player),new ClientBoundDevicePeerPacket(trainId,carriageId,deviceId,packet));
+    }
+
+    public PlayerResourceManager.CloseHandler onClose(PlayerResourceManager.CloseHandler closeHandler){
+        CreateRoute.PLAYER_RESOURCE_MANAGER.register(player,closeHandler);
+        return ()->{
+            if(!CreateRoute.PLAYER_RESOURCE_MANAGER.has(player,closeHandler)){
+                return;
+            }
+            CreateRoute.PLAYER_RESOURCE_MANAGER.unregister(player,closeHandler);
+            closeHandler.close();
+        };
     }
 
     @Override

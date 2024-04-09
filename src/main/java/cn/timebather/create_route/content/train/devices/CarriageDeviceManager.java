@@ -36,9 +36,9 @@ public class CarriageDeviceManager  {
     public void receive(UUID deviceId, ResourceLocation deviceName, CompoundTag deviceConfig) {
         if(this.devices.containsKey(deviceId)){
             TrainDevice device = this.devices.get(deviceId);
-
-            if(AllTrainDevices.REGISTRY.get().getKey(device.getType()) != deviceName){
-                CreateRoute.LOGGER.error("Failed to parse device" + deviceId.toString() + ", data conflict!");
+            ResourceLocation remoteLocation = AllTrainDevices.REGISTRY.get().getKey(device.getType());
+            if(Objects.equals(remoteLocation,deviceName)){
+                CreateRoute.LOGGER.error("Failed to parse device" + deviceId.toString() + ", data conflict! Local: "+ deviceName.toString() + ", remote:" + Objects.toString(remoteLocation));
                 return;
             }
 

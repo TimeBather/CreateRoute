@@ -15,6 +15,7 @@ import com.simibubi.create.content.trains.entity.CarriageContraption;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -91,7 +92,9 @@ public class TrainControllerDevice extends TrainDevice {
 
     @Override
     public CompoundTag write() {
-        return super.write();
+        CompoundTag tag = super.write();
+        tag.put("Devices",DeviceMapSerializer.serialize(devices).getList("Devices", Tag.TAG_COMPOUND));
+        return tag;
     }
 
     @Override

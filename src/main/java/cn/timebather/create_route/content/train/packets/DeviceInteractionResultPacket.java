@@ -2,10 +2,7 @@ package cn.timebather.create_route.content.train.packets;
 
 import cn.timebather.create_route.content.train.devices.CarriageDeviceManager;
 import cn.timebather.create_route.content.train.devices.SimpleDeviceGetter;
-import cn.timebather.create_route.interfaces.CarriageMixinInterface;
-import com.simibubi.create.Create;
 import com.simibubi.create.content.trains.entity.Carriage;
-import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;

@@ -1,7 +1,5 @@
 package cn.timebather.create_route.content.train.devices;
 
-import com.simibubi.create.content.trains.entity.CarriageContraption;
-
 public class TrainDeviceType<T extends TrainDevice>{
 
     private final TrainDeviceSuppler<? extends T> factory;

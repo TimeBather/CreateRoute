@@ -1,6 +1,5 @@
 package cn.timebather.create_route.content.train.devices;
 
-import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
 import net.minecraft.core.BlockPos;

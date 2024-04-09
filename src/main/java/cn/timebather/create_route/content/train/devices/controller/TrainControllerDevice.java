@@ -7,11 +7,13 @@ import cn.timebather.create_route.content.train.devices.controller.api.TrainCont
 import cn.timebather.create_route.content.train.devices.controller.api.TrainControllerServer;
 import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlock;
 import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlockEntity;
+import cn.timebather.create_route.content.train.devices.controller.screens.TrainControllerControlScreen;
 import cn.timebather.create_route.content.train.packets.ServerBoundDevicePeerPacket;
 import cn.timebather.create_route.interfaces.CarriageContraptionMixinInterface;
 import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Lazy;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -104,7 +107,10 @@ public class TrainControllerDevice extends TrainDevice {
 
     @Override
     public void interaction(Player player, Carriage carriage) {
-        player.displayClientMessage(Component.literal("Hello!"),false);
-        AllPackets.getChannel().sendToServer(ServerBoundDevicePeerPacket.create(carriage,id,new CompoundTag()));
+        Minecraft.getInstance().setScreen(new TrainControllerControlScreen(this,carriage));
+    }
+
+    public Collection<TrainDevice> getSubDevices(){
+        return this.devices.values();
     }
 }

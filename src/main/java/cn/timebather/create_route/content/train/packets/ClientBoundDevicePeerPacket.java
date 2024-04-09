@@ -1,6 +1,7 @@
 package cn.timebather.create_route.content.train.packets;
 
 import cn.timebather.create_route.AllPackets;
+import cn.timebather.create_route.Constants;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -32,6 +33,6 @@ public class ClientBoundDevicePeerPacket extends TrainDevicePeerPacket{
 
     @Override
     public PeerIdentifier getIdentifier(ResourceLocation location) {
-        return null;
+        return PeerIdentifier.of(Constants.UUID_ZERO,trainId,carriageId,deviceId,location.toString());
     }
 }

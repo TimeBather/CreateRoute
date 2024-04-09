@@ -1,6 +1,7 @@
 package cn.timebather.create_route.content.train.packets;
 
 import cn.timebather.create_route.AllPackets;
+import cn.timebather.create_route.Constants;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
@@ -44,6 +45,6 @@ public class ServerBoundDevicePeerPacket extends TrainDevicePeerPacket{
 
     @Override
     public PeerIdentifier getIdentifier(ResourceLocation location) {
-        return null;
+        return PeerIdentifier.of(player.getUUID(),trainId,carriageId,deviceId,location.toString());
     }
 }

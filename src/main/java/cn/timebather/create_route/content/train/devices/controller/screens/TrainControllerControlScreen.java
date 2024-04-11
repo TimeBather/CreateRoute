@@ -65,7 +65,7 @@ public class TrainControllerControlScreen extends Screen {
             if (location == null)
                 continue;
             Screen subScreen = screenProvider.createScreen();
-            subScreen.init(minecraft,height,width);
+            subScreen.init(minecraft,width,height);
             subScreens.add(subScreen);
             Button button = Button.builder(Component.translatable(location.toLanguageKey("device")), (event) -> {
                 current = subDevice;

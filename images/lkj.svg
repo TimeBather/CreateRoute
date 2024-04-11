@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="768">
+    <rect width="1024" height="768" fill="#808080"/>
+
+    <line x1="4" y1="6" x2="1012" y2="6" stroke="#404040" stroke-width="4" />
+    <line x1="4" y1="4" x2="1012" y2="4" stroke="#aaaaaa" stroke-width="2" />
+
+    <line x1="4" y1="754" x2="1012" y2="754" stroke="#404040" stroke-width="4" />
+    <line x1="4" y1="756" x2="1012" y2="756" stroke="#aaaaaa" stroke-width="2" />
+
+    <line x1="4" y1="113" x2="1012" y2="113" stroke="#404040" stroke-width="4" />
+    <line x1="4" y1="111" x2="1012" y2="111" stroke="#aaaaaa" stroke-width="2" />
+
+
+    <line x1="6" y1="6" x2="6" y2="754" stroke="#404040" stroke-width="4" />
+    <line x1="8" y1="8" x2="8" y2="752" stroke="#aaaaaa" stroke-width="2" />
+
+    <line x1="1012" y1="6" x2="1012" y2="754" stroke="#404040" stroke-width="4" />
+    <line x1="1010" y1="8" x2="1010" y2="752" stroke="#aaaaaa" stroke-width="2" />
+    <rect x="15" y="15" height="82" width="80"/>
+
+    <g transform="translate(55,55)">
+        <!--<circle r="30" fill="red"/>-->
+    </g>
+    <line x1="95" y1="15" x2="95" y2="95" stroke="white" stroke-width="2" />
+    <line x1="95" y1="15" x2="140" y2="15" stroke="white" stroke-width="2" />
+    <line x1="140" y1="15" x2="140" y2="95" stroke="black" stroke-width="2" />
+    <line x1="95" y1="96" x2="141" y2="96" stroke="black" stroke-width="2" />
+    <line x1="96" y1="35" x2="141" y2="35" stroke="black" stroke-width="2" />
+    <line x1="96" y1="55" x2="141" y2="55" stroke="black" stroke-width="2" />
+    <line x1="96" y1="75" x2="141" y2="75" stroke="black" stroke-width="2" />
+    <rect x="13" y="15" height="84" width="130" fill="transparent" stroke="#cccccc" stroke-width="2"/>
+
+    <defs>
+        <g id="data-large">
+            <rect height="90" width="120"/>
+            <line x1="0" y1="88" x2="120" y2="88" stroke="rgb(193,193,193)" stroke-width="4"/>
+            <line x1="118" y1="0" x2="118" y2="88" stroke="rgb(193,193,193)" stroke-width="4"/>
+        </g>
+        <g id="data-large-wider">
+            <rect height="90" width="190"/>
+            <line x1="0" y1="88" x2="190" y2="88" stroke="rgb(193,193,193)" stroke-width="4"/>
+            <line x1="188" y1="0" x2="188" y2="88" stroke="rgb(193,193,193)" stroke-width="4"/>
+        </g>
+    </defs>
+    <use transform="translate(175,15)" href="#data-large"/>
+    <use transform="translate(330,15)" href="#data-large"/>
+    <use transform="translate(485,15)" href="#data-large-wider"/>
+
+    <g transform="translate(720,15)">
+        <rect height="90" width="180"/>
+        <line x1="0" y1="88" x2="180" y2="88" stroke="rgb(193,193,193)" stroke-width="4"/>
+        <line x1="0" y1="35" x2="180" y2="35" stroke="#808080" stroke-width="4"/>
+        <line x1="178" y1="0" x2="178" y2="88" stroke="rgb(193,193,193)" stroke-width="4"/>
+    </g>
+    <g transform="translate(900,15)">
+        <rect height="90" width="100"/>
+        <line x1="0" y1="88" x2="100" y2="88" stroke="rgb(193,193,193)" stroke-width="4"/>
+        <line x1="98" y1="0" x2="98" y2="88" stroke="rgb(193,193,193)" stroke-width="4"/>
+    </g>
+    <g transform="translate(70,122)">
+        <rect height="575" width="860"/>
+        <line x1="0" y1="575" x2="860" y2="575" stroke="rgb(193,193,193)" stroke-width="4"/>
+        <line x1="860" y1="0" x2="860" y2="575" stroke="rgb(193,193,193)" stroke-width="4"/>
+    </g>
+    <!---<g transform="translate(935 120)">
+        <rect width="70" height="40" fill="red"/>
+        <line x1="1" y1="0" x2="1" y2="40" stroke="rgb(193,193,193)" stroke-width="2"/>
+        <line x1="1" y1="1" x2="70" y2="1" stroke="rgb(193,193,193)" stroke-width="2"/>
+        <line x1="1" y1="40" x2="70" y2="40" stroke="black" stroke-width="2"/>
+        <line x1="70" y1="1" x2="70" y2="40" stroke="black" stroke-width="2"/>
+    </g>
+    <g transform="translate(935 165)">
+        <rect width="70" height="40" fill="red"/>
+        <line x1="1" y1="0" x2="1" y2="40" stroke="rgb(193,193,193)" stroke-width="2"/>
+        <line x1="1" y1="1" x2="70" y2="1" stroke="rgb(193,193,193)" stroke-width="2"/>
+        <line x1="1" y1="40" x2="70" y2="40" stroke="black" stroke-width="2"/>
+        <line x1="70" y1="1" x2="70" y2="40" stroke="black" stroke-width="2"/>
+    </g>-->
+</svg>

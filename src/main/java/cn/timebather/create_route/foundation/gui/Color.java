@@ -28,19 +28,19 @@ public class Color {
     }
 
     public int getRed(){
-        return (colorCode >> 24) & 0xFF;
-    }
-
-    public int getGreen(){
         return (colorCode >> 16) & 0xFF;
     }
 
-    public int getBlue(){
+    public int getGreen(){
         return (colorCode >> 8) & 0xFF;
     }
 
-    public int getAlpha(){
+    public int getBlue(){
         return (colorCode) & 0xFF;
+    }
+
+    public int getAlpha(){
+        return (colorCode >> 24) & 0xFF;
     }
 
     public static float PERCENTAGE = 1f/255f;
@@ -56,5 +56,9 @@ public class Color {
     }
     public float getAlphaPercentage(){
         return getAlpha() * PERCENTAGE;
+    }
+
+    public int getColorCode(){
+        return colorCode;
     }
 }

@@ -84,4 +84,9 @@ public class TrainControllerControlScreen extends Screen {
         previousButton.active = false;
         current = subDevices.iterator().next();
     }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
+    }
 }

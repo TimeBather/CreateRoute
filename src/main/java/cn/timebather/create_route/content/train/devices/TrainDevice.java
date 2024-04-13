@@ -50,4 +50,8 @@ public abstract class TrainDevice{
     public abstract DevicePeer getClient();
 
     public abstract TrainDeviceType<? extends TrainDevice> getType();
+
+    public void tick() {
+
+    }
 }

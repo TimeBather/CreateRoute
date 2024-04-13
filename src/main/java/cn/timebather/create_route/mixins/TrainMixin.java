@@ -1,6 +1,7 @@
 package cn.timebather.create_route.mixins;
 
 import cn.timebather.create_route.content.train.traction.TractionEngine;
+import cn.timebather.create_route.interfaces.CarriageMixinInterface;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
@@ -62,5 +63,11 @@ public class TrainMixin{
         CompoundTag tag = cir.getReturnValue();
         if(this.createRoute$tractionEngine != null)
             tag.put("createRouteRewrite$tractionEngine",this.createRoute$tractionEngine.write());
+    }
+
+    @Inject(method = "tick",at=@At("TAIL"))
+    private void onTick(Level level, CallbackInfo ci){
+        Train self = (Train)(Object)this;
+        self.carriages.forEach((c)->((CarriageMixinInterface)c).createRoute$getDeviceManager().tick());
     }
 }

@@ -99,6 +99,7 @@ public class TrainControllerDevice extends TrainDevice {
     @Override
     public void init(CarriageDeviceManager carriageDeviceManager) {
         super.init(carriageDeviceManager);
+        this.devices.forEach((id,dev)->dev.init(carriageDeviceManager));
     }
 
     @Override
@@ -108,5 +109,10 @@ public class TrainControllerDevice extends TrainDevice {
 
     public Collection<TrainDevice> getSubDevices(){
         return this.devices.values();
+    }
+
+    @Override
+    public void tick() {
+        this.devices.forEach((id,device)->device.tick());
     }
 }

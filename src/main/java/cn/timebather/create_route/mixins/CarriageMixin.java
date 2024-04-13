@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = Carriage.class,remap = false)
 public class CarriageMixin implements CarriageMixinInterface {
     @Unique
-    CarriageDeviceManager createRoute$deviceManager = new CarriageDeviceManager();
+    CarriageDeviceManager createRoute$deviceManager = new CarriageDeviceManager((Carriage) (Object)this);
 
     @Inject(method = "setContraption",at=@At("TAIL"))
     private void onSetContraption(Level level, CarriageContraption contraption, CallbackInfo ci){

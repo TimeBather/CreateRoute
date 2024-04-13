@@ -1,7 +1,9 @@
 package cn.timebather.create_route.content.train.devices;
 
+import cn.timebather.create_route.AllPackets;
 import cn.timebather.create_route.CreateRoute;
 import cn.timebather.create_route.content.train.AllTrainDevices;
+import cn.timebather.create_route.content.train.packets.ServerBoundDevicePeerPacket;
 import com.simibubi.create.content.trains.entity.Carriage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +28,7 @@ public class CarriageDeviceManager  {
                 return;
             devices.put(device.id,device);
             device.init(this);
+            device.setClientPacketSender(this::sendClientSidePacket);
         });
         route$getDeviceManager.devices.clear();
     }
@@ -34,7 +37,10 @@ public class CarriageDeviceManager  {
     public void read(CompoundTag tag) {
         this.devices.clear();
         this.devices.putAll(DeviceMapSerializer.deserialize(tag));
-        this.devices.forEach((id,device)->device.init(this));
+        this.devices.forEach((id,device)->{
+            device.init(this);
+            device.setClientPacketSender(this::sendClientSidePacket);
+        });
     }
 
     public CompoundTag write(){
@@ -65,6 +71,7 @@ public class CarriageDeviceManager  {
         TrainDevice device = deviceType.create();
         device.read(deviceConfig);
         device.init(this);
+        device.setClientPacketSender(this::sendClientSidePacket);
         this.devices.put(deviceId,device);
     }
 
@@ -74,5 +81,9 @@ public class CarriageDeviceManager  {
 
     public void tick() {
         this.devices.forEach((id,device)->device.tick());
+    }
+
+    public void sendClientSidePacket(UUID deviceId,CompoundTag tag){
+        AllPackets.getChannel().sendToServer(new ServerBoundDevicePeerPacket(carriage.train.id,carriage.train.carriages.indexOf(carriage),deviceId,tag));
     }
 }

@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 public abstract class TrainDevice{
 
@@ -19,6 +20,7 @@ public abstract class TrainDevice{
     final RandomSource randomSource = RandomSource.create();
 
     public UUID id = UUID.fromString("00000000-0000-0000-0000-000000000000");
+    protected BiConsumer<UUID, CompoundTag> packetSender;
 
     public void onCapture(BlockState blockState, BlockPos pos, CarriageContraption carriageContraption, BlockEntity blockEntity){
         this.id = Mth.createInsecureUUID(randomSource);
@@ -53,5 +55,9 @@ public abstract class TrainDevice{
 
     public void tick() {
 
+    }
+
+    public void setClientPacketSender(BiConsumer<UUID,CompoundTag> packetSender){
+        this.packetSender = packetSender;
     }
 }

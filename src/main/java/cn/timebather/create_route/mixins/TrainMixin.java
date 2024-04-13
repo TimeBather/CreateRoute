@@ -2,6 +2,7 @@ package cn.timebather.create_route.mixins;
 
 import cn.timebather.create_route.content.train.traction.TractionEngine;
 import cn.timebather.create_route.interfaces.CarriageMixinInterface;
+import cn.timebather.create_route.interfaces.TrainTractionEngineProvider;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
@@ -22,7 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Mixin(value = Train.class,remap = false)
-public class TrainMixin{
+public class TrainMixin implements TrainTractionEngineProvider {
     @Unique
     @Nullable
     public TractionEngine createRoute$tractionEngine;
@@ -69,5 +70,15 @@ public class TrainMixin{
     private void onTick(Level level, CallbackInfo ci){
         Train self = (Train)(Object)this;
         self.carriages.forEach((c)->((CarriageMixinInterface)c).createRoute$getDeviceManager().tick());
+    }
+
+    @Override
+    public TractionEngine getEngine() {
+        return createRoute$tractionEngine;
+    }
+
+    @Override
+    public void setEngine(TractionEngine engine) {
+        createRoute$tractionEngine = engine;
     }
 }

@@ -7,6 +7,8 @@ import cn.timebather.create_route.foundation.gui.Color;
 import cn.timebather.create_route.foundation.gui.GuiLiner;
 import cn.timebather.create_route.foundation.gui.GuiTexture;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.datafixers.util.Pair;
+import com.simibubi.create.content.trains.entity.Carriage;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderType;
@@ -23,6 +25,11 @@ public class LKJ2000Screen extends Screen {
     private final LKJ2000Client client;
 
     private static final ItemStack clockStack = new ItemStack(Items.CLOCK,1);
+    private final LKJ2000Device device;
+
+    String speedStr = "0";
+
+    String distanceStr = "-----";
 
 
     ArrayList<BiConsumer<VertexConsumer, Matrix4f>> layout_lines = new ArrayList<>();
@@ -30,9 +37,11 @@ public class LKJ2000Screen extends Screen {
 
     private int warningTicks ;
 
+
     public LKJ2000Screen(LKJ2000Client client, LKJ2000Device device) {
         super(Component.literal(""));
         this.client = client;
+        this.device = device;
     }
 
     @Override
@@ -40,6 +49,27 @@ public class LKJ2000Screen extends Screen {
         this.warningTicks++;
         if(warningTicks > 40){
             warningTicks = 0;
+        }
+        this.element_lines.clear();
+        double lastY = 0;
+        boolean hasLastY = false;
+        ArrayList<Pair<Double, Double>> speedLines = this.device.getLastSpeedCurve();
+        double x = 68 - this.device.getRecordedDistance() / 23.8905d;
+        for (Pair<Double, Double> y : speedLines) {
+            if(!hasLastY){
+                lastY = y.getFirst();
+                hasLastY = true;
+                continue;
+            }
+            double screenDeltaDistance = y.getSecond() / 23.8095d;
+            element_lines.add(GuiLiner.line((float)x,(float)(140-lastY * 0.7),(float)(x+screenDeltaDistance),(float)(140-y.getFirst() * 0.7),0.2f,Color.GREEN));
+            x += screenDeltaDistance;
+            lastY = y.getFirst();
+        }
+        Carriage carriage = this.device.getCarriage();
+        if(carriage != null && carriage.train !=null){
+            int speed = (int)Math.floor(carriage.train.speed * 3.6 * 20);
+            this.speedStr = String.valueOf(speed);
         }
     }
 
@@ -92,8 +122,6 @@ public class LKJ2000Screen extends Screen {
         poseStack.pushPose();
         poseStack.scale(1.4f,2f,100);
         poseStack.translate(35f,5f,0);
-        String speedStr = "0";
-        String distanceStr = "-----";
         graphics.drawString(font, Component.literal(speedStr),18 - font.width(speedStr)+3,0,0x00ff00,false);
         graphics.drawString(font, Component.literal(distanceStr),24 - font.width(distanceStr) + 28 + 28 + 5 ,0,0xffff00,false);
         poseStack.translate(0.5f,0,0);

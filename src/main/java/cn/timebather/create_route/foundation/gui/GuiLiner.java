@@ -46,6 +46,15 @@ public class GuiLiner {
     }
 
     public static BiConsumer<VertexConsumer,Matrix4f> line(float x1, float y1, float x2, float y2, float width, Color color){
+        if(y1 > y2){
+            float temp;
+            temp = x1;
+            x1 = x2;
+            x2 = temp;
+            temp = y1;
+            y1 = y2;
+            y2 = temp;
+        }
         return line(x1, y1, x2, y2, width).apply(color);
     }
 

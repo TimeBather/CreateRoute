@@ -32,7 +32,7 @@ public class ServerBoundDevicePeerPacket extends TrainDevicePeerPacket{
     }
 
     @Override
-    void receive(TrainDevice device, CompoundTag packet, Player player) {
+    protected void receive(TrainDevice device, CompoundTag packet, Player player) {
         this.player = (ServerPlayer) player;
         device.getServer().receive(packet, this);
     }

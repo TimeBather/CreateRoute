@@ -1,5 +1,6 @@
 package cn.timebather.create_route.content.train.devices.controller;
 
+import cn.timebather.create_route.AllPackets;
 import cn.timebather.create_route.content.train.AllTrainDevices;
 import cn.timebather.create_route.content.train.devices.*;
 import cn.timebather.create_route.content.train.devices.controller.api.TrainControllerClient;
@@ -7,9 +8,14 @@ import cn.timebather.create_route.content.train.devices.controller.api.TrainCont
 import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlock;
 import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlockEntity;
 import cn.timebather.create_route.content.train.devices.controller.screens.TrainControllerControlScreen;
+import cn.timebather.create_route.content.train.packets.ServerBoundDevicePeerPacket;
+import cn.timebather.create_route.content.train.traction.TractionEngine;
 import cn.timebather.create_route.interfaces.CarriageContraptionMixinInterface;
+import cn.timebather.create_route.interfaces.TrainTractionEngineProvider;
+import cn.timebather.create_route.mixins.TrainMixin;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
+import com.simibubi.create.content.trains.entity.Train;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,10 +30,12 @@ import net.minecraftforge.common.util.Lazy;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 public class TrainControllerDevice extends TrainDevice {
 
     HashMap<UUID,TrainDevice> devices = new HashMap<>();
+    private CarriageDeviceManager carriageDeviceManager;
 
     public TrainControllerDevice() {}
 
@@ -99,7 +107,11 @@ public class TrainControllerDevice extends TrainDevice {
     @Override
     public void init(CarriageDeviceManager carriageDeviceManager) {
         super.init(carriageDeviceManager);
-        this.devices.forEach((id,dev)->dev.init(carriageDeviceManager));
+        this.devices.forEach((id,dev)->{
+            dev.init(carriageDeviceManager);
+            dev.setClientPacketSender(this::sendClientSidePacket);
+        });
+        this.carriageDeviceManager = carriageDeviceManager;
     }
 
     @Override
@@ -111,8 +123,31 @@ public class TrainControllerDevice extends TrainDevice {
         return this.devices.values();
     }
 
+    public TrainDevice getSubDeviceById(UUID id){
+        return this.devices.get(id);
+    }
+
     @Override
     public void tick() {
         this.devices.forEach((id,device)->device.tick());
+
+        Train train = carriageDeviceManager.getCarriage().train;
+        TrainTractionEngineProvider tep = (TrainTractionEngineProvider) train;
+        if(train == null)
+            return;
+        if(tep.getEngine() == null)
+            tep.setEngine(new TractionEngine(train));
+    }
+
+    @Override
+    public void setClientPacketSender(BiConsumer<UUID, CompoundTag> packetSender) {
+        super.setClientPacketSender(packetSender);
+    }
+
+    public void sendClientSidePacket(UUID deviceId,CompoundTag tag){
+        CompoundTag warp = new CompoundTag();
+        warp.putUUID("DeviceId",deviceId);
+        warp.put("Message",tag);
+        this.packetSender.accept(this.id,warp);
     }
 }

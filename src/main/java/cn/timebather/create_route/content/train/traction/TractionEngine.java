@@ -74,4 +74,19 @@ public class TractionEngine {
         this.friction_break_coefficient = tag.getDouble("FrictionBreakCoefficient");
         this.forward = tag.getBoolean("Forward");
     }
+
+    public void setPower(int power){
+        if(power >= 0){
+            this.power = power;
+            this.constant_break_power = 0;
+        }else{
+            this.power = 0;
+            this.constant_break_power = -power;
+        }
+    }
+
+    public void setBreak(float v) {
+        this.max_friction_break_coefficient = 0.001;
+        this.friction_break_coefficient = v * max_friction_break_coefficient;
+    }
 }

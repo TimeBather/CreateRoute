@@ -5,6 +5,7 @@ import cn.timebather.create_route.content.train.devices.TrainDevice;
 import cn.timebather.create_route.content.train.devices.TrainDeviceType;
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.LKJ2000Device;
 import cn.timebather.create_route.content.train.devices.controller.TrainControllerDevice;
+import cn.timebather.create_route.content.train.devices.panel.cr200j3.CR200J3PanelDevice;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -25,6 +26,9 @@ public class AllTrainDevices {
 
     public static final RegistryObject<TrainDeviceType<LKJ2000Device>> LKJ_2000 =
             DEVICES.register("atp_lkj2000", ()-> TrainDeviceType.Builder.of(LKJ2000Device::new).build());
+
+    public static final RegistryObject<TrainDeviceType<CR200J3PanelDevice>> PANEL_CR200J3 =
+            DEVICES.register("panel_cr200j3", ()-> TrainDeviceType.Builder.of(CR200J3PanelDevice::new).build());
 
     public static void init(IEventBus eventBus){
         DEVICES.register(eventBus);

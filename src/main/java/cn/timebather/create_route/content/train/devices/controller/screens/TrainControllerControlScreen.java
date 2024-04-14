@@ -40,9 +40,8 @@ public class TrainControllerControlScreen extends Screen {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float pTicks) {
         super.render(graphics, mouseX, mouseY, pTicks);
-        for (Screen subScreen : subScreens) {
-            subScreen.render(graphics,mouseX,mouseY,pTicks);
-        }
+        if(activeScreen != null)
+            activeScreen.render(graphics,mouseX,mouseY,pTicks);
     }
 
     @Override
@@ -88,5 +87,38 @@ public class TrainControllerControlScreen extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    @Override
+    public boolean mouseDragged(double p_94699_, double p_94700_, int p_94701_, double p_94702_, double p_94703_) {
+        if(this.activeScreen == null)
+            return false;
+        this.activeScreen.mouseDragged(p_94699_,p_94700_,p_94701_,p_94702_,p_94703_);
+        return true;
+    }
+
+    @Override
+    public boolean mouseClicked(double x, double y, int key) {
+        if(super.mouseClicked(x,y,key))
+            return true;
+        if(this.activeScreen == null){
+            return false;
+        }
+        return this.activeScreen.mouseClicked(x,y,key);
+    }
+
+    @Override
+    public boolean mouseReleased(double x, double y, int key) {
+        if(super.mouseClicked(x,y,key))
+            return true;
+        if(this.activeScreen == null){
+            return false;
+        }
+        return this.activeScreen.mouseReleased(x,y,key);
+    }
+
+    @Override
+    public boolean mouseScrolled(double x, double y, double keyCode) {
+        return super.mouseScrolled(x, y, keyCode);
     }
 }

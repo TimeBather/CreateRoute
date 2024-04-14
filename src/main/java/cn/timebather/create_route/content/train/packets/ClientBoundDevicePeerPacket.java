@@ -20,7 +20,7 @@ public class ClientBoundDevicePeerPacket extends TrainDevicePeerPacket{
     }
 
     @Override
-    void receive(TrainDevice device, CompoundTag packet, Player player) {
+    protected void receive(TrainDevice device, CompoundTag packet, Player player) {
         device.getClient().receive(tag,this);
     }
 

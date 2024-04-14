@@ -65,7 +65,7 @@ public abstract class TrainDevicePeerPacket extends SimplePacketBase implements 
         return true;
     }
 
-    abstract void receive(TrainDevice device, CompoundTag packet, Player player);
+    protected abstract void receive(TrainDevice device, CompoundTag packet, Player player);
 
     public abstract void send(CompoundTag packet);
 

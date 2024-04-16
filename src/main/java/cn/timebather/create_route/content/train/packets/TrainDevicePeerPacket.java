@@ -4,6 +4,7 @@ import cn.timebather.create_route.PlayerResourceManager;
 import cn.timebather.create_route.content.train.devices.CarriageDeviceManager;
 import cn.timebather.create_route.content.train.devices.SimpleDeviceGetter;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
+import com.simibubi.create.content.trains.GlobalRailwayManager;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.Minecraft;
@@ -55,7 +56,7 @@ public abstract class TrainDevicePeerPacket extends SimplePacketBase implements 
             Player player = context.getSender();
             if(player == null)
                 player = Minecraft.getInstance().player;
-            Carriage carriage = SimpleDeviceGetter.getCarriage(trainId,carriageId);
+            Carriage carriage = SimpleDeviceGetter.getCarriage(this.getReceiverRailways(),trainId,carriageId);
             CarriageDeviceManager deviceManager = SimpleDeviceGetter.getManager(carriage);
             if(deviceManager == null)
                 return;
@@ -64,6 +65,8 @@ public abstract class TrainDevicePeerPacket extends SimplePacketBase implements 
         });
         return true;
     }
+
+    protected abstract GlobalRailwayManager getReceiverRailways();
 
     protected abstract void receive(TrainDevice device, CompoundTag packet, Player player);
 

@@ -3,6 +3,8 @@ package cn.timebather.create_route.content.train.packets;
 import cn.timebather.create_route.AllPackets;
 import cn.timebather.create_route.Constants;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
+import com.simibubi.create.CreateClient;
+import com.simibubi.create.content.trains.GlobalRailwayManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -32,5 +34,10 @@ public class ClientBoundDevicePeerPacket extends TrainDevicePeerPacket{
     @Override
     public PeerIdentifier getIdentifier(ResourceLocation location) {
         return PeerIdentifier.of(Constants.UUID_ZERO,trainId,carriageId,deviceId,location.toString());
+    }
+
+    @Override
+    protected GlobalRailwayManager getReceiverRailways() {
+        return CreateClient.RAILWAYS;
     }
 }

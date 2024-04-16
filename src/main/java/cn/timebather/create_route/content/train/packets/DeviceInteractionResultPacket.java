@@ -2,6 +2,7 @@ package cn.timebather.create_route.content.train.packets;
 
 import cn.timebather.create_route.content.train.devices.CarriageDeviceManager;
 import cn.timebather.create_route.content.train.devices.SimpleDeviceGetter;
+import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
 import net.minecraft.client.Minecraft;
@@ -45,7 +46,7 @@ public class DeviceInteractionResultPacket extends SimplePacketBase {
 
     public boolean handle(NetworkEvent.Context context) {
         context.enqueueWork(()->{
-            Carriage carriage = SimpleDeviceGetter.getCarriage(trainId,carriageId);
+            Carriage carriage = SimpleDeviceGetter.getCarriage(CreateClient.RAILWAYS,trainId,carriageId);
             CarriageDeviceManager deviceManager = SimpleDeviceGetter.getManager(carriage);
             if(deviceManager == null)
                 return;

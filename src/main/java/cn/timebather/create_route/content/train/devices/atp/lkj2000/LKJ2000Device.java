@@ -15,7 +15,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -48,7 +50,8 @@ public class LKJ2000Device extends TrainDevice implements ScreenDevice {
 
     @Override
     public Screen createScreen() {
-        return new LKJ2000Screen(client.get(),this);
+        LKJ2000Device that = this;
+        return DistExecutor.unsafeCallWhenOn(Dist.CLIENT,()->()->LKJ2000ClientBridge.createScreen(this.client.get(),that));
     }
 
     @Override

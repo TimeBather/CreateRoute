@@ -54,8 +54,6 @@ public abstract class TrainDevicePeerPacket extends SimplePacketBase implements 
     public boolean handle(NetworkEvent.Context context) {
         context.enqueueWork(()->{
             Player player = context.getSender();
-            if(player == null)
-                player = Minecraft.getInstance().player;
             Carriage carriage = SimpleDeviceGetter.getCarriage(this.getReceiverRailways(),trainId,carriageId);
             CarriageDeviceManager deviceManager = SimpleDeviceGetter.getManager(carriage);
             if(deviceManager == null)

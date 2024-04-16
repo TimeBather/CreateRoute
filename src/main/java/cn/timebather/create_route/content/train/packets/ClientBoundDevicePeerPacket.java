@@ -9,6 +9,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.UUID;
 
@@ -21,11 +23,13 @@ public class ClientBoundDevicePeerPacket extends TrainDevicePeerPacket{
         super(trainId, carriageId, deviceId, packet);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     protected void receive(TrainDevice device, CompoundTag packet, Player player) {
         device.getClient().receive(tag,this);
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public void send(CompoundTag packet) {
         AllPackets.getChannel().sendToServer(new ClientBoundDevicePeerPacket(trainId,carriageId,deviceId,packet));
@@ -37,6 +41,7 @@ public class ClientBoundDevicePeerPacket extends TrainDevicePeerPacket{
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     protected GlobalRailwayManager getReceiverRailways() {
         return CreateClient.RAILWAYS;
     }

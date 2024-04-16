@@ -25,12 +25,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.extensions.IForgeBlockEntity;
-import net.minecraftforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.Nullable;
 
 public class BoardPortScreen extends HorizontalDirectionalBlock implements EntityBlock {
@@ -64,14 +61,16 @@ public class BoardPortScreen extends HorizontalDirectionalBlock implements Entit
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player p_60506_, InteractionHand p_60507_, BlockHitResult p_60508_) {
         if(!level.isClientSide)
             return InteractionResult.SUCCESS;
 
         BlockEntity be = level.getBlockEntity(blockPos);
 
-        if(be instanceof BoardPortScreenBlockEntity boardPortScreenBlockEntity)
-            Minecraft.getInstance().setScreen(new BoardPortScreenEditScreen(boardPortScreenBlockEntity));
+        if(be instanceof BoardPortScreenBlockEntity boardPortScreenBlockEntity){
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT,()->()->BoardPortScreenScreenLoader.open(boardPortScreenBlockEntity));
+        }
         return InteractionResult.SUCCESS;
     }
 }

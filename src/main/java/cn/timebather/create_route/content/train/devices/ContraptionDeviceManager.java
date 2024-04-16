@@ -66,4 +66,7 @@ public class ContraptionDeviceManager {
             this.locators.put(BlockPos.of(locator.getLong("Locator")),locator.getUUID("Uuid"));
         }
     }
+    public UUID getLocators(BlockPos localPos) {
+        return locators.get(localPos);
+    }
 }

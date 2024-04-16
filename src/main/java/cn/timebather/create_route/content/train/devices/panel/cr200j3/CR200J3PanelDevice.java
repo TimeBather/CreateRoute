@@ -12,7 +12,8 @@ import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Lazy;
 
 import java.util.function.Consumer;
@@ -38,6 +39,7 @@ public class CR200J3PanelDevice extends TrainDevice implements ScreenDevice {
         return AllTrainDevices.PANEL_CR200J3.get();
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public Screen createScreen() {
         return new CR200J3PanelScreen(this);

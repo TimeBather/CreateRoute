@@ -4,6 +4,7 @@ import cn.timebather.create_route.content.train.devices.panel.cr200j3.CR200J3Gui
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.CR200J3PanelDevice;
 import cn.timebather.create_route.foundation.gui.Color;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.simibubi.create.content.trains.entity.Carriage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -14,7 +15,7 @@ public class CR200J3PanelScreen extends Screen {
     private int x;
     private int y;
 
-    public CR200J3PanelScreen(CR200J3PanelDevice device) {
+    public CR200J3PanelScreen(CR200J3PanelDevice device, Carriage carriage) {
         super(Component.literal(""));
         this.device = device;
     }

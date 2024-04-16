@@ -12,11 +12,11 @@ import cn.timebather.create_route.content.train.packets.ServerBoundDevicePeerPac
 import cn.timebather.create_route.content.train.traction.TractionEngine;
 import cn.timebather.create_route.interfaces.CarriageContraptionMixinInterface;
 import cn.timebather.create_route.interfaces.TrainTractionEngineProvider;
-import cn.timebather.create_route.mixins.TrainMixin;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
 import com.simibubi.create.content.trains.entity.Train;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -87,7 +87,7 @@ public class TrainControllerDevice extends TrainDevice {
     }
 
     @Override
-    public TrainDeviceType<? extends TrainDevice> getType() {
+    public TrainDeviceType<TrainControllerDevice> getType() {
         return AllTrainDevices.TRAIN_CONTROLLER.get();
     }
 
@@ -116,7 +116,7 @@ public class TrainControllerDevice extends TrainDevice {
 
     @Override
     public void interaction(Player player, Carriage carriage) {
-        Minecraft.getInstance().setScreen(new TrainControllerControlScreen(this,carriage));
+        this.getType().openScreen(this,carriage);
     }
 
     public Collection<TrainDevice> getSubDevices(){

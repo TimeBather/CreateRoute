@@ -38,9 +38,9 @@ public class LKJ2000Screen extends Screen {
     private int warningTicks ;
 
 
-    public LKJ2000Screen(LKJ2000Client client, LKJ2000Device device) {
+    public LKJ2000Screen(LKJ2000Device device, Carriage carriage) {
         super(Component.literal(""));
-        this.client = client;
+        this.client = device.getClient();
         this.device = device;
     }
 

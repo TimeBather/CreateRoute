@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Queue;
 
-public class LKJ2000Device extends TrainDevice implements ScreenDevice {
+public class LKJ2000Device extends TrainDevice {
     @Nullable
     private Carriage carriage;
 
@@ -34,24 +34,18 @@ public class LKJ2000Device extends TrainDevice implements ScreenDevice {
     Lazy<LKJ2000Client> client = Lazy.of(LKJ2000Client::new);
 
     @Override
-    public DevicePeer getServer() {
+    public LKJ2000Server getServer() {
         return server.get();
     }
 
     @Override
-    public DevicePeer getClient() {
+    public LKJ2000Client getClient() {
         return client.get();
     }
 
     @Override
     public TrainDeviceType<? extends TrainDevice> getType() {
         return AllTrainDevices.LKJ_2000.get();
-    }
-
-    @Override
-    public Screen createScreen() {
-        LKJ2000Device that = this;
-        return DistExecutor.unsafeCallWhenOn(Dist.CLIENT,()->()->LKJ2000ClientBridge.createScreen(this.client.get(),that));
     }
 
     @Override

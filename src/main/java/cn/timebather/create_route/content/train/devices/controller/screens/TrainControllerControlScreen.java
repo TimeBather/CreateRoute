@@ -4,6 +4,7 @@ package cn.timebather.create_route.content.train.devices.controller.screens;
 import cn.timebather.create_route.content.train.AllTrainDevices;
 import cn.timebather.create_route.content.train.devices.ScreenDevice;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
+import cn.timebather.create_route.content.train.devices.TrainDeviceScreenBuilder;
 import cn.timebather.create_route.content.train.devices.controller.TrainControllerDevice;
 import cn.timebather.create_route.content.train.devices.controller.api.TrainControllerClient;
 import com.simibubi.create.content.trains.entity.Carriage;
@@ -58,12 +59,15 @@ public class TrainControllerControlScreen extends Screen {
         Collection<TrainDevice> subDevices = this.device.getSubDevices();
         int i = 0;
         for (TrainDevice subDevice : subDevices) {
-            if(!(subDevice instanceof ScreenDevice screenProvider))
-                continue;
+            @SuppressWarnings("unchecked")
+            TrainDeviceScreenBuilder<TrainDevice> screenBuilder =
+                    (TrainDeviceScreenBuilder<TrainDevice>) subDevice.getType().getScreenBuilder().get();
+            if(screenBuilder == null)
+                return;
             ResourceLocation location = AllTrainDevices.REGISTRY.get().getKey(subDevice.getType());
             if (location == null)
                 continue;
-            Screen subScreen = screenProvider.createScreen();
+            Screen subScreen = screenBuilder.create(subDevice,this.carriage);
             subScreen.init(minecraft,width,height);
             subScreens.add(subScreen);
             Button button = Button.builder(Component.translatable(location.toLanguageKey("device")), (event) -> {

@@ -40,14 +40,14 @@ public class TrainDeviceType<T extends TrainDevice>{
         });
     }
 
-    public SimpleBlockEntityRenderer createRendererInstance(){
-        return DistExecutor.unsafeCallWhenOn(Dist.CLIENT,()->()->(SimpleBlockEntityRenderer)this.renderer.get().create());
+    public SimpleTrainDeviceRenderer createRendererInstance(){
+        return DistExecutor.unsafeCallWhenOn(Dist.CLIENT,()->()->(SimpleTrainDeviceRenderer)this.renderer.get().create());
     }
 
-    private final Lazy<SimpleBlockEntityRenderer> rendererInstance = Lazy.of(this::createRendererInstance);
+    private final Lazy<SimpleTrainDeviceRenderer> rendererInstance = Lazy.of(this::createRendererInstance);
 
-    public void render(FakeGeckoRenderableBlockEntity parent, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1){
-        this.rendererInstance.get().render(parent,v,poseStack,multiBufferSource,i,i1);
+    public void render(TrainDevice device, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1){
+        this.rendererInstance.get().render(device,v,poseStack,multiBufferSource,i,i1);
     }
 
     public static final class Builder<T extends TrainDevice>{

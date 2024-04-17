@@ -1,6 +1,6 @@
 package cn.timebather.create_route;
 
-import cn.timebather.create_route.content.train.devices.MovingInteractiveBlock;
+import cn.timebather.create_route.content.train.devices.common.behaviours.MovingInteractiveBlock;
 import com.simibubi.create.AllInteractionBehaviours;
 import com.simibubi.create.AllMovementBehaviours;
 

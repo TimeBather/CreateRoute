@@ -2,6 +2,8 @@ package cn.timebather.create_route.content.train.devices;
 
 import cn.timebather.create_route.AllPackets;
 import cn.timebather.create_route.content.train.AllTrainDevices;
+import cn.timebather.create_route.content.train.devices.common.manager.ContraptionDeviceManager;
+import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import cn.timebather.create_route.content.train.packets.DeviceInteractionResultPacket;
 import cn.timebather.create_route.interfaces.CarriageMixinInterface;
 import cn.timebather.create_route.interfaces.DeviceCarriageContraption;

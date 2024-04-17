@@ -1,6 +1,6 @@
 package cn.timebather.create_route.mixins;
 
-import cn.timebather.create_route.content.train.devices.CarriageDeviceManager;
+import cn.timebather.create_route.content.train.devices.common.manager.CarriageDeviceManager;
 import cn.timebather.create_route.interfaces.CarriageContraptionMixinInterface;
 import cn.timebather.create_route.interfaces.CarriageMixinInterface;
 import com.simibubi.create.content.trains.entity.Carriage;

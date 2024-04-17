@@ -1,7 +1,7 @@
 package cn.timebather.create_route.content.train.packets;
 
-import cn.timebather.create_route.content.train.devices.CarriageDeviceManager;
-import cn.timebather.create_route.content.train.devices.SimpleDeviceGetter;
+import cn.timebather.create_route.content.train.devices.common.manager.CarriageDeviceManager;
+import cn.timebather.create_route.content.train.devices.common.networking.SimpleDeviceGetter;
 import com.simibubi.create.CreateClient;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.foundation.networking.SimplePacketBase;

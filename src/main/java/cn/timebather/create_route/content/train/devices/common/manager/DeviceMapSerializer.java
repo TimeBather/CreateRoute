@@ -1,6 +1,8 @@
-package cn.timebather.create_route.content.train.devices;
+package cn.timebather.create_route.content.train.devices.common.manager;
 
 import cn.timebather.create_route.content.train.AllTrainDevices;
+import cn.timebather.create_route.content.train.devices.TrainDevice;
+import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class DeviceMapSerializer {
-    public static CompoundTag serialize(Map<UUID,TrainDevice> deviceMap){
+    public static CompoundTag serialize(Map<UUID, TrainDevice> deviceMap){
         ListTag devicesTag = new ListTag();
         deviceMap.forEach((device,instance)->{
             ResourceLocation location = AllTrainDevices.REGISTRY.get().getKey(instance.getType());

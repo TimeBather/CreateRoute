@@ -1,6 +1,6 @@
 package cn.timebather.create_route.content.train.devices.panel.cr200j3.api;
 
-import cn.timebather.create_route.content.train.devices.DevicePeer;
+import cn.timebather.create_route.content.train.devices.common.networking.DevicePeer;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.CR200J3PanelDevice;
 import cn.timebather.create_route.content.train.packets.SimpleDevicePacketSender;
 import net.minecraft.nbt.CompoundTag;

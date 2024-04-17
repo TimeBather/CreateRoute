@@ -1,6 +1,6 @@
 package cn.timebather.create_route.content.train.devices.controller.api;
 
-import cn.timebather.create_route.content.train.devices.DevicePeer;
+import cn.timebather.create_route.content.train.devices.common.networking.DevicePeer;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import cn.timebather.create_route.content.train.packets.SimpleDevicePacketSender;
 import net.minecraft.client.Minecraft;

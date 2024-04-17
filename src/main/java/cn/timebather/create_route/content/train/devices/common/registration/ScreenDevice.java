@@ -1,4 +1,4 @@
-package cn.timebather.create_route.content.train.devices;
+package cn.timebather.create_route.content.train.devices.common.registration;
 
 import net.minecraft.client.gui.screens.Screen;
 

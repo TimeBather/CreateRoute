@@ -1,5 +1,9 @@
 package cn.timebather.create_route.content.train.devices;
 
+import cn.timebather.create_route.content.train.devices.common.manager.CarriageDeviceManager;
+import cn.timebather.create_route.content.train.devices.common.manager.ContraptionDeviceManager;
+import cn.timebather.create_route.content.train.devices.common.networking.DevicePeer;
+import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
 import net.minecraft.core.BlockPos;

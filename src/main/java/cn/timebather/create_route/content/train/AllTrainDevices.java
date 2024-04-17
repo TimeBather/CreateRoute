@@ -2,7 +2,7 @@ package cn.timebather.create_route.content.train;
 
 import cn.timebather.create_route.CreateRoute;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
-import cn.timebather.create_route.content.train.devices.TrainDeviceType;
+import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.LKJ2000Device;
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.screen.LKJ2000Screen;
 import cn.timebather.create_route.content.train.devices.controller.TrainControllerDevice;

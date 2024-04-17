@@ -1,8 +1,10 @@
-package cn.timebather.create_route.content.train.devices;
+package cn.timebather.create_route.content.train.devices.common.manager;
 
 import cn.timebather.create_route.AllPackets;
 import cn.timebather.create_route.CreateRoute;
 import cn.timebather.create_route.content.train.AllTrainDevices;
+import cn.timebather.create_route.content.train.devices.TrainDevice;
+import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import cn.timebather.create_route.content.train.packets.ServerBoundDevicePeerPacket;
 import com.simibubi.create.content.trains.entity.Carriage;
 import net.minecraft.nbt.CompoundTag;
@@ -20,7 +22,7 @@ public class CarriageDeviceManager  {
         this.carriage = carriage;
     }
 
-    HashMap<UUID,TrainDevice> devices = new HashMap<>();
+    HashMap<UUID, TrainDevice> devices = new HashMap<>();
 
     public void attemptTransferFrom(ContraptionDeviceManager route$getDeviceManager) {
         route$getDeviceManager.devices.forEach((type,device)->{

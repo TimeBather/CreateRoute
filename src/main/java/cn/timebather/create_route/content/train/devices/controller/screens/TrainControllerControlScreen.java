@@ -4,7 +4,7 @@ package cn.timebather.create_route.content.train.devices.controller.screens;
 import cn.timebather.create_route.content.train.AllTrainDevices;
 import cn.timebather.create_route.content.train.devices.ScreenDevice;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
-import cn.timebather.create_route.content.train.devices.TrainDeviceScreenBuilder;
+import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceScreenBuilder;
 import cn.timebather.create_route.content.train.devices.controller.TrainControllerDevice;
 import cn.timebather.create_route.content.train.devices.controller.api.TrainControllerClient;
 import com.simibubi.create.content.trains.entity.Carriage;

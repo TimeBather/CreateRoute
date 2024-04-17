@@ -2,7 +2,9 @@ package cn.timebather.create_route.content.train.devices.panel.cr200j3;
 
 import cn.timebather.create_route.content.train.AllTrainDevices;
 import cn.timebather.create_route.content.train.devices.*;
-import cn.timebather.create_route.content.train.devices.atp.lkj2000.api.LKJ2000Server;
+import cn.timebather.create_route.content.train.devices.common.manager.CarriageDeviceManager;
+import cn.timebather.create_route.content.train.devices.common.networking.DevicePeer;
+import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.api.CR200J3Client;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.api.CR200J3Server;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.screen.CR200J3PanelScreen;

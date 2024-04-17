@@ -1,5 +1,6 @@
-package cn.timebather.create_route.content.train.devices;
+package cn.timebather.create_route.content.train.devices.common.networking;
 
+import cn.timebather.create_route.content.train.devices.common.manager.CarriageDeviceManager;
 import cn.timebather.create_route.interfaces.CarriageMixinInterface;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
 import com.simibubi.create.content.trains.entity.Carriage;

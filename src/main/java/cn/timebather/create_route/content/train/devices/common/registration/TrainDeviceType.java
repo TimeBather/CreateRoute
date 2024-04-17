@@ -1,5 +1,7 @@
-package cn.timebather.create_route.content.train.devices;
+package cn.timebather.create_route.content.train.devices.common.registration;
 
+import cn.timebather.create_route.content.train.devices.SimpleTrainDeviceRenderer;
+import cn.timebather.create_route.content.train.devices.TrainDevice;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.trains.entity.Carriage;
 import net.minecraft.client.Minecraft;

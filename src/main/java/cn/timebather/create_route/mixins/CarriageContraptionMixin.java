@@ -1,6 +1,6 @@
 package cn.timebather.create_route.mixins;
 
-import cn.timebather.create_route.content.train.devices.ContraptionDeviceManager;
+import cn.timebather.create_route.content.train.devices.common.manager.ContraptionDeviceManager;
 import cn.timebather.create_route.interfaces.CarriageContraptionMixinInterface;
 import cn.timebather.create_route.interfaces.DeviceCarriageContraption;
 import com.simibubi.create.content.trains.entity.CarriageContraption;

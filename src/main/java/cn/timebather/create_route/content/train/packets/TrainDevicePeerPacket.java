@@ -1,8 +1,8 @@
 package cn.timebather.create_route.content.train.packets;
 
 import cn.timebather.create_route.PlayerResourceManager;
-import cn.timebather.create_route.content.train.devices.CarriageDeviceManager;
-import cn.timebather.create_route.content.train.devices.SimpleDeviceGetter;
+import cn.timebather.create_route.content.train.devices.common.manager.CarriageDeviceManager;
+import cn.timebather.create_route.content.train.devices.common.networking.SimpleDeviceGetter;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
 import com.simibubi.create.content.trains.entity.Carriage;

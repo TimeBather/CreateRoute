@@ -1,4 +1,4 @@
-package cn.timebather.create_route.content.train.devices;
+package cn.timebather.create_route.content.train.devices.common.networking;
 
 import cn.timebather.create_route.content.train.packets.SimpleDevicePacketSender;
 import net.minecraft.nbt.CompoundTag;

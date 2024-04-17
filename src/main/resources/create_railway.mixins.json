@@ -7,6 +7,7 @@
   "mixins": [
     "CarriageContraptionMixin",
     "CarriageMixin",
+    "EdgeDataMixin",
     "TrainMixin",
     "accessor.CarriageBogeyAccessor"
   ],

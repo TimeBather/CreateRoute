@@ -59,7 +59,7 @@ public class TrainDeviceMovingBehavior extends SimpleBlockMovingInteraction {
 
         int carriageId = train.carriages.indexOf(carriage);
 
-        UUID deviceId = deviceManager.locators.get(blockPos);
+        UUID deviceId = deviceManager.getLocators(blockPos);
 
         if(deviceId == null)
             return blockState;

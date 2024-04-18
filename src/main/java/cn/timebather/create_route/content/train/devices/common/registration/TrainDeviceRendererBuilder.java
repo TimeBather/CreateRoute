@@ -1,7 +1,6 @@
 package cn.timebather.create_route.content.train.devices.common.registration;
 
-import cn.timebather.create_route.content.train.devices.TrainDeviceRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import cn.timebather.create_route.content.train.devices.common.rendering.TrainDeviceRenderer;
 
 @FunctionalInterface
 public interface TrainDeviceRendererBuilder {

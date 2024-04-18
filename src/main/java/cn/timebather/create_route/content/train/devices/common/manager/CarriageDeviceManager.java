@@ -5,10 +5,12 @@ import cn.timebather.create_route.CreateRoute;
 import cn.timebather.create_route.content.train.AllTrainDevices;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
+import cn.timebather.create_route.content.train.packets.ClientBoundDevicePeerPacket;
 import cn.timebather.create_route.content.train.packets.ServerBoundDevicePeerPacket;
 import com.simibubi.create.content.trains.entity.Carriage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -23,6 +25,8 @@ public class CarriageDeviceManager  {
     }
 
     HashMap<UUID, TrainDevice> devices = new HashMap<>();
+
+    HashMap<UUID, Integer> fetching = new HashMap<>();
 
     public void attemptTransferFrom(ContraptionDeviceManager route$getDeviceManager) {
         route$getDeviceManager.devices.forEach((type,device)->{
@@ -87,5 +91,23 @@ public class CarriageDeviceManager  {
 
     public void sendClientSidePacket(UUID deviceId,CompoundTag tag){
         AllPackets.getChannel().sendToServer(new ServerBoundDevicePeerPacket(carriage.train.id,carriage.train.carriages.indexOf(carriage),deviceId,tag));
+    }
+
+    public void sendTrackingPacket(UUID deviceId,CompoundTag tag){
+        this.carriage.forEachPresentEntity((entity)->{
+            AllPackets.getChannel().send(PacketDistributor.TRACKING_ENTITY.with(()->entity), new ClientBoundDevicePeerPacket(carriage.train.id,carriage.id,deviceId,tag));
+        });
+    }
+
+    public void markFetching(UUID deviceId){
+        this.fetching.put(deviceId,1);
+    }
+
+    public void markFetched(UUID deviceId){
+        this.fetching.remove(deviceId);
+    }
+
+    public boolean isFetching(UUID deviceId){
+        return this.fetching.containsKey(deviceId);
     }
 }

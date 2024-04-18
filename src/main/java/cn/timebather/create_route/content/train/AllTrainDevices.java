@@ -7,7 +7,9 @@ import cn.timebather.create_route.content.train.devices.atp.lkj2000.LKJ2000Devic
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.screen.LKJ2000Screen;
 import cn.timebather.create_route.content.train.devices.controller.TrainControllerDevice;
 import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlockRenderer;
+import cn.timebather.create_route.content.train.devices.controller.render.TrainControllerDeviceRenderer;
 import cn.timebather.create_route.content.train.devices.controller.screens.TrainControllerControlScreen;
+import cn.timebather.create_route.content.train.devices.panel.cr200j3.CR200J3GeoRenderer;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.CR200J3PanelDevice;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.screen.CR200J3PanelScreen;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -29,7 +31,7 @@ public class AllTrainDevices {
             DEVICES.register("train_controller", ()->
                     TrainDeviceType.Builder.of(TrainControllerDevice::new)
                             .screen(()-> TrainControllerControlScreen::new)
-                            .renderer(()-> TrainControllerBlockRenderer::new)
+                            .renderer(()-> TrainControllerDeviceRenderer::new)
                             .build()
             );
 
@@ -44,6 +46,7 @@ public class AllTrainDevices {
             DEVICES.register("panel_cr200j3",
                     ()-> TrainDeviceType.Builder.of(CR200J3PanelDevice::new)
                             .screen(()-> CR200J3PanelScreen::new)
+                            .renderer(()-> CR200J3GeoRenderer::new)
                             .build()
             );
 

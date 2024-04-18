@@ -1,5 +1,6 @@
 package cn.timebather.create_route.content.train.devices.common.rendering;
 
+import cn.timebather.create_route.content.train.devices.AbstractTrainDeviceRenderer;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -8,6 +9,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
@@ -25,7 +27,7 @@ import software.bernie.geckolib.util.RenderUtils;
 import java.util.List;
 import java.util.Objects;
 
-public class TrainDeviceRenderer<T extends TrainDevice & GeoAnimatable> implements GeoRenderer<T>{
+public class TrainDeviceRenderer<T extends TrainDevice & GeoAnimatable> implements GeoRenderer<T>, AbstractTrainDeviceRenderer<T> {
     protected final GeoRenderLayersContainer<T> renderLayers = new GeoRenderLayersContainer<>(this);
     protected final GeoModel<T> model;
     protected T animatable;
@@ -33,6 +35,8 @@ public class TrainDeviceRenderer<T extends TrainDevice & GeoAnimatable> implemen
     protected float scaleHeight = 1.0F;
     protected Matrix4f blockRenderTranslations = new Matrix4f();
     protected Matrix4f modelRenderTranslations = new Matrix4f();
+    private Direction defaultDirection = Direction.NORTH;
+    private BlockPos defaultPos = BlockPos.ZERO;
 
     public TrainDeviceRenderer(GeoModel<T> model) {
         this.model = model;
@@ -79,17 +83,28 @@ public class TrainDeviceRenderer<T extends TrainDevice & GeoAnimatable> implemen
         this.defaultRender(poseStack, this.animatable, bufferSource, (RenderType)null, (VertexConsumer)null, 0.0F, partialTick, packedLight);
     }
 
-    public void actuallyRender(PoseStack poseStack, T animatable, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderBlock(BlockPos pos,Direction direction,float partialTick, PoseStack poseStack,MultiBufferSource bufferSource, int packedLight, int packedOverlay){
+        this.animatable = null;
+        this.defaultDirection = direction;
+        this.defaultRender(poseStack, null, bufferSource, (RenderType) null, (VertexConsumer) null,0.0F,partialTick,packedLight);
+    }
+
+    public void actuallyRender(PoseStack poseStack, @Nullable T animatable, BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         if (!isReRender) {
             AnimationState<T> animationState = new AnimationState(animatable, 0.0F, 0.0F, partialTick, false);
-            long instanceId = this.getInstanceId(animatable);
-            animationState.setData(DataTickets.TICK, ((GeoAnimatable)animatable).getTick(animatable));
+            long instanceId = 0;
+            if(animatable != null)
+                this.getInstanceId(animatable);
+            if(animatable != null)
+                animationState.setData(DataTickets.TICK, ((GeoAnimatable)animatable).getTick(animatable));
             // animationState.setData(DataTickets.BLOCK_ENTITY, animatable);
             Objects.requireNonNull(animationState);
-            getGeoModel().addAdditionalStateData(animatable, instanceId, animationState::setData);
+            if(animatable != null)
+                getGeoModel().addAdditionalStateData(animatable, instanceId, animationState::setData);
             poseStack.translate(0.5, 0.0, 0.5);
-            this.rotateBlock(this.getFacing(animatable), poseStack);
-            this.model.handleAnimations(animatable, instanceId, animationState);
+            this.rotateBlock( animatable == null ? defaultDirection :this.getFacing(animatable), poseStack);
+            if(animatable != null)
+                this.model.handleAnimations(animatable, instanceId, animationState);
         }
 
         this.modelRenderTranslations = new Matrix4f(poseStack.last().pose());
@@ -101,7 +116,7 @@ public class TrainDeviceRenderer<T extends TrainDevice & GeoAnimatable> implemen
             Matrix4f poseState = new Matrix4f(poseStack.last().pose());
             Matrix4f localMatrix = RenderUtils.invertAndMultiplyMatrices(poseState, this.blockRenderTranslations);
             Matrix4f worldState = new Matrix4f(localMatrix);
-            BlockPos pos = this.animatable.getBlockPos();
+            BlockPos pos = this.animatable == null ? this.defaultPos : this.animatable.getBlockPos();
             bone.setModelSpaceMatrix(RenderUtils.invertAndMultiplyMatrices(poseState, this.modelRenderTranslations));
             bone.setLocalSpaceMatrix(localMatrix);
             bone.setWorldSpaceMatrix(worldState.translate(new Vector3f((float)pos.getX(), (float)pos.getY(), (float)pos.getZ())));
@@ -117,7 +132,7 @@ public class TrainDeviceRenderer<T extends TrainDevice & GeoAnimatable> implemen
 
     @Override
     public boolean firePreRenderEvent(PoseStack poseStack, BakedGeoModel bakedGeoModel, MultiBufferSource multiBufferSource, float v, int i) {
-        return false;
+        return true;
     }
 
     @Override

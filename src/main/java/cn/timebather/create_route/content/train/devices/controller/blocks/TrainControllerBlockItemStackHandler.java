@@ -24,6 +24,7 @@ public class TrainControllerBlockItemStackHandler extends ItemStackHandler {
     public void onContentsChanged(int slot) {
         super.onContentsChanged(slot);
         blockEntity.setChanged();
+        blockEntity.dispatchContentChanged();
     }
 
     public Item[] getItems(){

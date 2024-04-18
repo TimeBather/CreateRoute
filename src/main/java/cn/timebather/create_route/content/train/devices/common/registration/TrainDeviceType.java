@@ -1,12 +1,16 @@
 package cn.timebather.create_route.content.train.devices.common.registration;
 
-import cn.timebather.create_route.content.train.devices.SimpleTrainDeviceRenderer;
+import cn.timebather.create_route.content.train.devices.AbstractTrainDeviceRenderer;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.trains.entity.Carriage;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.DistExecutor;
 
@@ -42,14 +46,48 @@ public class TrainDeviceType<T extends TrainDevice>{
         });
     }
 
-    public SimpleTrainDeviceRenderer createRendererInstance(){
-        return DistExecutor.unsafeCallWhenOn(Dist.CLIENT,()->()->(SimpleTrainDeviceRenderer)this.renderer.get().create());
+    @OnlyIn(Dist.CLIENT)
+    public Screen createScreenInstance(T device){
+        return this.screenBuilder.get().create(device,device.getCarriage());
     }
 
-    private final Lazy<SimpleTrainDeviceRenderer> rendererInstance = Lazy.of(this::createRendererInstance);
+    public AbstractTrainDeviceRenderer<T> createRendererInstance(){
+        return DistExecutor.unsafeCallWhenOn(Dist.CLIENT,()->()->{
+            if(this.renderer == null)
+                return null;
+            TrainDeviceRendererBuilder rendererSupplier = this.renderer.get();
+            if(rendererSupplier == null)
+                return null;
+            @SuppressWarnings("unchecked")
+            AbstractTrainDeviceRenderer<T> renderer = (AbstractTrainDeviceRenderer<T>)rendererSupplier.create();
+            return renderer;
+        });
+    }
 
-    public void render(TrainDevice device, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1){
-        this.rendererInstance.get().render(device,v,poseStack,multiBufferSource,i,i1);
+    private final Lazy<AbstractTrainDeviceRenderer<T>> rendererInstance = Lazy.of(this::createRendererInstance);
+
+    public boolean renderCast(TrainDevice device, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1){
+        return render((T) device,v,poseStack,multiBufferSource,i,i1);
+    }
+
+    public boolean render(T device, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1){
+        AbstractTrainDeviceRenderer<T> renderer = this.rendererInstance.get();
+        if(renderer == null)
+            return false;
+        renderer.render(device,v,poseStack,multiBufferSource,i,i1);
+        return true;
+    }
+
+    public boolean renderStatic(BlockPos pos, Direction direction, float v, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, int i1) {
+        AbstractTrainDeviceRenderer<T> renderer = this.rendererInstance.get();
+        if(renderer == null)
+            return false;
+        renderer.renderBlock(pos,direction,v, poseStack, multiBufferSource, i, i1);
+        return true;
+    }
+
+    public boolean hasRenderer() {
+        return this.renderer != null;
     }
 
     public static final class Builder<T extends TrainDevice>{

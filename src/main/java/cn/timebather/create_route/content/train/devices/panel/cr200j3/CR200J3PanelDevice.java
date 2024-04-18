@@ -41,12 +41,6 @@ public class CR200J3PanelDevice extends TrainDevice implements ScreenDevice {
         return AllTrainDevices.PANEL_CR200J3.get();
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public Screen createScreen() {
-        return new CR200J3PanelScreen(this);
-    }
-
     public void setPower(int power) {
         CompoundTag tag = new CompoundTag();
         tag.putString("Operation","SetPower");

@@ -7,6 +7,7 @@ import cn.timebather.create_route.content.train.devices.common.behaviours.Moving
 import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceProvider;
 import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import cn.timebather.create_route.content.train.devices.controller.TrainControllerDevice;
+import cn.timebather.create_route.content.train.devices.controller.TrainControllerDeviceSpecialRenderMovingBehavior;
 import com.simibubi.create.content.contraptions.behaviour.MovementBehaviour;
 import com.simibubi.create.content.contraptions.behaviour.MovingInteractionBehaviour;
 import net.minecraft.core.BlockPos;
@@ -25,12 +26,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class TrainControllerBlock extends HorizontalDirectionalBlock implements TrainDeviceProvider, MovingInteractiveBlock, EntityBlock {
     public TrainControllerBlock(Properties properties) {
-        super(properties);
+        super(properties.noOcclusion());
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -42,7 +44,7 @@ public class TrainControllerBlock extends HorizontalDirectionalBlock implements 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext placeContext) {
         return super.getStateForPlacement(placeContext)
-                .setValue(FACING,placeContext.getHorizontalDirection());
+                .setValue(FACING,placeContext.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -50,9 +52,11 @@ public class TrainControllerBlock extends HorizontalDirectionalBlock implements 
         return AllTrainDevices.TRAIN_CONTROLLER.get();
     }
 
+    Lazy<TrainControllerDeviceSpecialRenderMovingBehavior> behaviorLazy =
+            Lazy.of(TrainControllerDeviceSpecialRenderMovingBehavior::new);
     @Override
     public MovementBehaviour getMovementBehaviour() {
-        return null;
+        return behaviorLazy.get();
     }
 
     @Override
@@ -67,6 +71,12 @@ public class TrainControllerBlock extends HorizontalDirectionalBlock implements 
         NetworkHooks.openScreen((ServerPlayer) player, level.getBlockEntity(blockPos,AllBlockEntities.TRAIN_CONTROLLER.get()).orElseThrow(), (byteBuf)->byteBuf.writeBlockPos(blockPos));
         return InteractionResult.SUCCESS;
     }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
 
 
     @Nullable

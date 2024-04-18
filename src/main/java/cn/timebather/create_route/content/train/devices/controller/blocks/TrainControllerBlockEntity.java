@@ -16,8 +16,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoBlockEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class TrainControllerBlockEntity extends BlockEntity implements MenuProvider {
+public class TrainControllerBlockEntity extends BlockEntity implements MenuProvider, GeoBlockEntity, GeoAnimatable {
     private final TrainControllerBlockItemStackHandler inventory = new TrainControllerBlockItemStackHandler(this);
 
     private final LazyOptional<TrainControllerBlockItemStackHandler> optionalInventory = LazyOptional.of(()->inventory);
@@ -63,5 +68,29 @@ public class TrainControllerBlockEntity extends BlockEntity implements MenuProvi
 
     public LazyOptional<TrainControllerBlockItemStackHandler> getOptional() {
         return optionalInventory;
+    }
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    public void dispatchContentChanged() {
+        if(level!= null && !level.isClientSide){
+            level.sendBlockUpdated(getBlockPos(),getBlockState(),getBlockState(),3);
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        dispatchContentChanged();
     }
 }

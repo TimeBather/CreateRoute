@@ -4,5 +4,5 @@ import cn.timebather.create_route.content.train.devices.common.rendering.TrainDe
 
 @FunctionalInterface
 public interface TrainDeviceRendererBuilder {
-    public TrainDeviceRenderer<?> create();
+    public AbstractTrainDeviceRenderer<?> create();
 }

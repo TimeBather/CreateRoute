@@ -2,5 +2,10 @@
   "item.create_route.atp_lkj2000": "LKJ2000 型列车运行监控记录装置",
   "device.create_route.atp_lkj2000": "LKJ2000",
   "item.create_route.panel_cr200j3": "CR200J3 列车驾驶台",
-  "device.create_route.panel_cr200j3": "列车驾驶台"
+  "device.create_route.panel_cr200j3": "列车驾驶台",
+  "item.create_route.blocking_ticket": "路票",
+  "item.create_route.blocking_ticket_machine": "路票机",
+  "block.create_route.train_controller_block": "火车驾驶台",
+  "create_route.train_controller_device": "火车驾驶台",
+  "block.create_route.track_circuit_sampler": "轨道电路传输方块"
 }

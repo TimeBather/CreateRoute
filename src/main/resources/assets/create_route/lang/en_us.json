@@ -2,5 +2,10 @@
   "item.create_route.atp_lkj2000": "LKJ2000 Train Operation Monitoring Control System",
   "device.create_route.atp_lkj2000": "LKJ2000",
   "item.create_route.panel_cr200j3": "CR200J3 Train Controller Panel",
-  "device.create_route.panel_cr200j3": "Train Panel"
+  "device.create_route.panel_cr200j3": "Train Panel",
+  "block.create_route.train_controller_block":"Modern Train Controller Block",
+  "block.create_route.track_circuit_sampler":"Track Circuit Sampler Block",
+  "create_route.train_controller_device":"Train Controller",
+  "item.create_route.blocking_ticket": "Blocking Ticket",
+  "item.create_route.blocking_ticket_machine": "Blocking Ticket Machine"
 }

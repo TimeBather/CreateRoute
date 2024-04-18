@@ -2,7 +2,6 @@ package cn.timebather.create_route.content.train.devices.controller.screens;
 
 
 import cn.timebather.create_route.content.train.AllTrainDevices;
-import cn.timebather.create_route.content.train.devices.ScreenDevice;
 import cn.timebather.create_route.content.train.devices.TrainDevice;
 import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceScreenBuilder;
 import cn.timebather.create_route.content.train.devices.controller.TrainControllerDevice;

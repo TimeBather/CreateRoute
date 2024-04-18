@@ -7,7 +7,6 @@ import cn.timebather.create_route.content.train.devices.TrainDevice;
 import com.simibubi.create.content.trains.GlobalRailwayManager;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.foundation.networking.SimplePacketBase;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

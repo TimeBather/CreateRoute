@@ -6,7 +6,6 @@ import cn.timebather.create_route.content.train.devices.common.registration.Trai
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.LKJ2000Device;
 import cn.timebather.create_route.content.train.devices.atp.lkj2000.screen.LKJ2000Screen;
 import cn.timebather.create_route.content.train.devices.controller.TrainControllerDevice;
-import cn.timebather.create_route.content.train.devices.controller.blocks.TrainControllerBlockRenderer;
 import cn.timebather.create_route.content.train.devices.controller.render.TrainControllerDeviceRenderer;
 import cn.timebather.create_route.content.train.devices.controller.screens.TrainControllerControlScreen;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.CR200J3GeoRenderer;

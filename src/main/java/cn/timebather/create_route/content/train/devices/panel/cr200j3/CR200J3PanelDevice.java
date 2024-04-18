@@ -7,20 +7,15 @@ import cn.timebather.create_route.content.train.devices.common.networking.Device
 import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.api.CR200J3Client;
 import cn.timebather.create_route.content.train.devices.panel.cr200j3.api.CR200J3Server;
-import cn.timebather.create_route.content.train.devices.panel.cr200j3.screen.CR200J3PanelScreen;
 import cn.timebather.create_route.content.train.traction.TractionEngine;
 import cn.timebather.create_route.interfaces.TrainTractionEngineProvider;
-import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.Train;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Lazy;
 
 import java.util.function.Consumer;
 
-public class CR200J3PanelDevice extends TrainDevice implements ScreenDevice {
+public class CR200J3PanelDevice extends TrainDevice {
 
     Lazy<CR200J3Server> server = Lazy.of(()->new CR200J3Server(this));
     Lazy<CR200J3Client> client = Lazy.of(()->new CR200J3Client(this));

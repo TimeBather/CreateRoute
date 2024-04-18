@@ -7,18 +7,8 @@ import cn.timebather.create_route.content.train.devices.atp.lkj2000.api.LKJ2000S
 import cn.timebather.create_route.content.train.devices.common.manager.CarriageDeviceManager;
 import cn.timebather.create_route.content.train.devices.common.registration.TrainDeviceType;
 import com.mojang.datafixers.util.Pair;
-import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.trains.entity.Carriage;
-import com.simibubi.create.content.trains.entity.CarriageContraption;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

@@ -66,8 +66,10 @@ public abstract class TrainDevice implements GeoAnimatable {
         return tag;
     }
 
-    public void init(CarriageDeviceManager carriageDeviceManager){
+    Carriage carriage;
 
+    public void init(CarriageDeviceManager carriageDeviceManager){
+        this.carriage = carriageDeviceManager.getCarriage();
     }
 
     public void assembleCheck(ContraptionDeviceManager contraptionDeviceManager){
